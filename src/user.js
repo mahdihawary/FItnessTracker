@@ -12,6 +12,7 @@ class User {
         </ul>
         `
         node.append(userDiv)
+        
     }
     static create(node){
         const form = document.createElement("form")
@@ -26,5 +27,6 @@ class User {
         node.append(form)
         
     }
+
 
 }
