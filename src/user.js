@@ -15,6 +15,7 @@ class User {
     }
     static create(node){
         const form = document.createElement("form")
+        form.setAttribute("id", "newUser")
         form.innerHTML =`
         <label>Name</label>
         <input name = "name">
