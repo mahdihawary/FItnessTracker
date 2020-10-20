@@ -1,10 +1,12 @@
 document.addEventListener("DOMContentLoaded", function (e) {
+    
     const baseURL = "http://localhost:3000/api/v1/users/"
     const exerciseBaseUrl = "http://localhost:3000/api/v1/exercises/"
     const dayBaseUrl = "http://localhost:3000/api/v1/days/"
 
     const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
+    const main = document.querySelector("main")
 
 
     fetch(exerciseBaseUrl)
@@ -16,6 +18,23 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     })
 
+    const renderLogin = () => {
+        const formDiv = document.createElement("div")
+        formDiv.innerHTML = `<div>
+        <form id="login">
+                <label> UserName </label> 
+                <input name = "name">
+                <button type = "submit"> login </button>
+        </form>                    
+                </div>
+        `
+        main.append(formDiv)
+    }
+
+    const logout =() =>{
+        main.dataset.userId = "nil"
+        renderLogin()
+    }
 
 
 
@@ -27,13 +46,23 @@ document.addEventListener("DOMContentLoaded", function (e) {
             if (target.matches("#signup")) {
                 User.create(content)
             }
+
+            if (target.matches("#logout")){
+                logout()
+            }
         })
     }
     const submitListener = () => {
         document.addEventListener('submit', (e) => {
             e.preventDefault()
             const target = e.target
-            if(e.target.matches('#newDay')){
+            if (target.matches("#login")){
+              User.UserLogin(target.name.value)
+                
+
+            }
+            
+            else if(target.matches('#newDay')){
                 console.log('newDay submit')
 
                 options = {
@@ -60,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     target.reset()
 
             }
-            else if(e.target.matches('#newUser')){
+            else if(target.matches('#newUser')){
                 console.log('newUser submit')
                 options = {
                     method: "POST",
@@ -88,7 +117,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
             const newUser = new User(user)
             newUser.render(content)
         })
-
 
     const renderUserNav = () => {
         let userIcon = document.createElement("p");
@@ -121,6 +149,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     navClickListener()
     renderUserNav()
+    renderLogin()
     createUserEvent()
     submitListener()
 })

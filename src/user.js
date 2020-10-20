@@ -25,7 +25,19 @@ class User {
         <button type="submit">submit</button>
         `
         node.append(form)
-        
+
+    }
+
+    static UserLogin(userName){
+        const baseURL = "http://localhost:3000/api/v1/users/"
+        return fetch(baseURL)
+            .then(response => response.json())
+            .then(users =>{
+                const main = document.querySelector("main")
+                const currentUser = users.find(user => user.name == userName)
+                main.dataset.userId = currentUser.id
+            })
+
     }
 
 
