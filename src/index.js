@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function (e) {
     const baseURL = "http://localhost:3000/api/v1/users/"
     const exerciseBaseUrl = "http://localhost:3000/api/v1/exercises/"
+    const dayBaseUrl = "http://localhost:3000/api/v1/days/"
 
     const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
@@ -32,23 +33,52 @@ document.addEventListener("DOMContentLoaded", function (e) {
         document.addEventListener('submit', (e) => {
             e.preventDefault()
             const target = e.target
-            console.log(target.name.value)
-            options = {
-                method: "POST",
-                headers: {
-                    "content-type": "application/json",
-                    "accept": "application/json"
-                },
-                body: JSON.stringify({
-                    name: target.name.value,
-                    weight: target.weight.value
-                })
-            }
+            if(e.target.matches('#newDay')){
+                console.log('newDay submit')
 
-            fetch(baseURL, options)
-                .then(response => response.json())
-                .then(console.log)
-                target.reset()
+                options = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        date: target.date.value,
+                        user_id: target.userId.value,
+                        exercise_id: target.exerciseId.value,
+                        weight: target.weight.value,
+                        rep: target.reps.value,
+                        set: target.sets.value,
+                        distance: target.distance.value,
+                        time: target.time.value
+                    })
+                }
+    
+                fetch(dayBaseUrl, options)
+                    .then(response => response.json())
+                    .then(console.log)
+                    target.reset()
+
+            }
+            else if(e.target.matches('#newUser')){
+                console.log('newUser submit')
+                options = {
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: target.name.value,
+                        weight: target.weight.value
+                    })
+                }
+    
+                fetch(baseURL, options)
+                    .then(response => response.json())
+                    .then(console.log)
+                    target.reset()
+            }
         })
     }
 
