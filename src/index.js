@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     })
 
-    renderLogin = () => {
+    const renderLogin = () => {
         const formDiv = document.createElement("div")
         formDiv.innerHTML = `<div>
         <form id="login">
@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         main.append(formDiv)
     }
 
-    logout =() =>{
+    const logout =() =>{
         main.dataset.userId = "nil"
         renderLogin()
     }
@@ -118,6 +118,37 @@ document.addEventListener("DOMContentLoaded", function (e) {
             newUser.render(content)
         })
 
+    const renderUserNav = () => {
+        let userIcon = document.createElement("p");
+        userIcon.classList.add('userIcon');
+        userIcon.textContent = `User-Name Here`
+        let logoutBtn = document.createElement("button");
+        logoutBtn.classList.add('logoutBtn');
+        logoutBtn.textContent = `Logout`
+        document.querySelector('#userNav').append(userIcon, logoutBtn)
+    }
+
+    const clearUserNav = () => {
+        document.querySelector('#userNav').innerHTML = '';
+    }
+
+    const navClickListener = () => {
+        let header = document.querySelector('header');
+        header.addEventListener('click', e => {
+            if(e.target.matches('h1')){
+                console.log('render home page')
+            }
+            else if (e.target.matches('.userIcon')){
+                console.log('render user page')
+            }
+            else if (e.target.matches('.logoutBtn')){
+                console.log('logout user')
+            }
+        })
+    }
+
+    navClickListener()
+    renderUserNav()
     renderLogin()
     createUserEvent()
     submitListener()

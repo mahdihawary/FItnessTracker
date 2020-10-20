@@ -9,11 +9,31 @@ header {
   border: 1px solid black;
   height: 7.5vh;
   background: #303030;
+  display: flex;
 }
 h1 {
   color: #f0f0f0;
   padding: 1vh 1vw;
+  width: 60vw;
+  margin-left: 5vw;
+  align-self: center;
 }
+#userNav {
+  width: 30vw;
+  display: flex;
+  margin-right: 5vw;
+}
+.userIcon {
+  color: #f0f0f0;
+  width: 20vw;
+  align-self: center;
+}
+
+.logoutBtn {
+  width: 15vw;
+  justify-self: right;
+}
+
 h1, aside, .content {
   text-align: center;
 }
