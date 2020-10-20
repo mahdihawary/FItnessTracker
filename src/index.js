@@ -100,6 +100,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
         document.querySelector('#userNav').append(userIcon, logoutBtn)
     }
 
+    const clearUserNav = () => {
+        document.querySelector('#userNav').innerHTML = '';
+    }
+
     const navClickListener = () => {
         let header = document.querySelector('header');
         header.addEventListener('click', e => {
