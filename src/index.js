@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const baseURL = "http://localhost:3000/api/v1/users/"
     const exerciseBaseUrl = "http://localhost:3000/api/v1/exercises/"
     const dayBaseUrl = "http://localhost:3000/api/v1/days/"
+    const routineURL = "http://localhost:3000/api/v1/routine/"
     const main = document.querySelector("main")
     // const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
@@ -223,6 +224,51 @@ document.addEventListener("DOMContentLoaded", function (e) {
             })
             
     }
+    const renderRoutineForm = () => { //will fetch exercises from database to allow selection
+
+        fetch(exerciseBaseUrl)
+        .then(response => response.json())
+        .then( data => {
+            
+                const routineForm = document.createElement("form")
+                routineForm.innerHTML =`
+                <form id ="routine">
+                < label >Routine name< /label>  
+                <input name = "name" >
+                <select name = "exercises" id = "exercise">
+                </select>
+                < button type = "submit" > Create Routine < /button>
+                < /form>`
+            for (const exercise of data) {
+                let exerciseOption = `<option value = "${exercise.id}" > ${exercise.name} </option>`
+                routineForm.append(exerciseOption)
+            }
+
+            
+        })
+    }
+
+    const createRoutine = (options) =>{
+
+        fetch(routineURL, options)
+            .then(response => (response.json()))
+            .then(routine => {
+            console.log(routine)
+            })
+    }
+    const renderGraph =(data, count) =>{
+        const canvas = document.createElement("canvas")
+        canvas.innerHTML =`
+        < canvas id = "graph" width = "400" height = "400" > < /canvas>`
+        let graph = new Chart(canvas, {
+            type: 'doughnut',
+                data: {
+                    
+                },
+                options: options
+        })
+    }
+
 
     navClickListener()
     // renderUserNav()
