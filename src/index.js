@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         })
     }
 
-    fetch(baseURL + 1)
+        fetch(baseURL + 1)
         .then(response => (response.json()))
         .then(user => {
             const newUser = new User(user)
@@ -125,7 +125,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
         let logoutBtn = document.createElement("button");
         logoutBtn.classList.add('logoutBtn');
         logoutBtn.textContent = `Logout`
-        document.querySelector('#userNav').append(userIcon, logoutBtn)
+        let statsButton = document.createElement("button");
+        statsButton.classList.add('statsButton');
+        statsButton.textContent = `Stats`
+        document.querySelector('#userNav').append(userIcon, logoutBtn, statsButton)
     }
 
     const clearUserNav = () => {
@@ -144,8 +147,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
             else if (e.target.matches('.logoutBtn')){
                 console.log('logout user')
             }
+            else if (e.target.matches('.statsButton')) {
+                getUserStats()
+            }
         })
     }
+    const getUserStats = () =>{
+        const userId = document.querySelector("main").dataset.userId
+        fetch(baseURL+userId)
+            .then(response => (response.json()))
+            .then(user => {
+                console.log(user)
+            })
+            
+    }
+
+
+
+
 
     navClickListener()
     renderUserNav()
