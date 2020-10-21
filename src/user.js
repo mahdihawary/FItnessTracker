@@ -2,10 +2,10 @@ class User {
     constructor(user) {
         this.name = user.name
         this.weight = user.weight
+        this.id = user.id
     }
-
     render(node) {
-        console.log(this)
+        // console.log(this)
         const userDiv = document.createElement("div")
         userDiv.innerHTML = `<ul>
         <li>${this.name}</li>
@@ -28,6 +28,25 @@ class User {
         node.append(form)
 
     }
+    static renderUserView(currentUser) {
+        const baseURL = "http://localhost:3000/api/v1/users/"
+        Render.renderAsideAndContentDiv()
+        let mainElement = document.querySelector("main")
+        // console.log(mainElement)
+        let id = mainElement.dataset.userId
+        console.log(currentUser)
+        const content = document.querySelector("#content")
+        const newUser = new User(currentUser)
+            newUser.render(content)
+
+        // fetch(baseURL + `${currentUser.id}`)
+        //     .then(response => (response.json()))
+        //     .then(user => {
+        //         const newUser = new User(user)
+        //         newUser.render(content)
+        //     })
+    }
+
 
     static UserLogin(userName){
         const baseURL = "http://localhost:3000/api/v1/users/"
@@ -37,9 +56,16 @@ class User {
                 const main = document.querySelector("main")
                 const currentUser = users.find(user => user.name == userName)
                 main.dataset.userId = currentUser.id
-            })
+                User.renderUserView(currentUser)
+                
 
+
+            })
     }
+
+    
+
+    
 
 
 }
