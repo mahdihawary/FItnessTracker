@@ -3,10 +3,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const baseURL = "http://localhost:3000/api/v1/users/"
     const exerciseBaseUrl = "http://localhost:3000/api/v1/exercises/"
     const dayBaseUrl = "http://localhost:3000/api/v1/days/"
-
+    const main = document.querySelector("main")
     // const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
-    const main = document.querySelector("main")
+    
     // const formDiv = document.querySelector('.centered-form-div')
 
     const navClickListener = () => {
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 removeFormDiv()
                 // this ^^ is async and we have to wait for an id
                 // hence this dumb timeout below
-                setTimeout(renderUserView, 1000)
+                // setTimeout(renderUserView, 1000)
                 
                 renderUserNav()
             }
@@ -169,37 +169,32 @@ document.addEventListener("DOMContentLoaded", function (e) {
         renderLogin()
     }
 
-    const renderAsideAndContentDiv = () => {
-        main.innerHTML = `
-        <aside id="aside"></aside>
-        <div class="content" id="content">
-        `
-    }
+    
 
     const removeUserView = () => {
         main.innerHTML = ``
     }
 
-    const renderUserView = () => {
-        renderAsideAndContentDiv()
-        let mainElement = document.querySelector("main")
-        // console.log(mainElement)
-        let id = mainElement.dataset.userId
-        console.log(mainElement.dataset.userId)
-        const content = document.querySelector("#content")
-        fetch(baseURL + `${mainElement.dataset.userId}`)
-            .then(response => (response.json()))
-            .then(user => {
-                const newUser = new User(user)
-                newUser.render(content)
-            })
-    }
-        fetch(baseURL + 1)
-        .then(response => (response.json()))
-        .then(user => {
-            const newUser = new User(user)
-            newUser.render(content)
-        })
+    // const renderUserView = () => {
+    //     renderAsideAndContentDiv()
+    //     let mainElement = document.querySelector("main")
+    //     // console.log(mainElement)
+    //     let id = mainElement.dataset.userId
+    //     console.log(mainElement.dataset.userId)
+    //     const content = document.querySelector("#content")
+    //     fetch(baseURL + `${mainElement.dataset.userId}`)
+    //         .then(response => (response.json()))
+    //         .then(user => {
+    //             const newUser = new User(user)
+    //             newUser.render(content)
+    //         })
+    // }
+        // fetch(baseURL + 1)
+        // .then(response => (response.json()))
+        // .then(user => {
+        //     const newUser = new User(user)
+        //     newUser.render(content)
+        // })
 
     const renderUserNav = () => {
         let userIcon = document.createElement("p");
