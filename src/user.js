@@ -13,38 +13,28 @@ class User {
         </ul>
         `
         node.append(userDiv)
-
     }
-    static create(node){
-        const form = document.createElement("form")
-        form.setAttribute("id", "newUser")
-        form.innerHTML =`
-        <label>Name</label>
-        <input name = "name">
-        <label>Weight</label> 
-        <input name ="weight">
-        <button type="submit">submit</button>
-        `
-        node.append(form)
+    // static create(node){
+    //     // console.log("User.create called")
+    //     const form = document.createElement("form")
+    //     form.setAttribute("id", "newUser")
+    //     form.innerHTML =`
+    //     <h2>New User</h2>
+    //     <label>Name</label>
+    //     <input name = "name">
+    //     <label>Weight</label> 
+    //     <input name ="weight">
+    //     <button type="submit">submit</button>
+    //     `
+    //     node.append(form)
 
-    }
+    // }
+
+    // would like to rename this
     static renderUserView(currentUser) {
-        const baseURL = "http://localhost:3000/api/v1/users/"
         Render.renderAsideAndContentDiv()
-        let mainElement = document.querySelector("main")
-        // console.log(mainElement)
-        let id = mainElement.dataset.userId
-        console.log(currentUser)
-        const content = document.querySelector("#content")
         const newUser = new User(currentUser)
             newUser.render(content)
-
-        // fetch(baseURL + `${currentUser.id}`)
-        //     .then(response => (response.json()))
-        //     .then(user => {
-        //         const newUser = new User(user)
-        //         newUser.render(content)
-        //     })
     }
 
 
@@ -57,9 +47,6 @@ class User {
                 const currentUser = users.find(user => user.name == userName)
                 main.dataset.userId = currentUser.id
                 User.renderUserView(currentUser)
-                
-
-
             })
     }
 
