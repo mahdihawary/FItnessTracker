@@ -4,55 +4,25 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const exerciseBaseUrl = "http://localhost:3000/api/v1/exercises/"
     const dayBaseUrl = "http://localhost:3000/api/v1/days/"
 
-    const content = document.querySelector("#content")
+    // const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
     const main = document.querySelector("main")
     // const formDiv = document.querySelector('.centered-form-div')
 
-    fetch(exerciseBaseUrl)
-    .then(response => response.json())
-    .then( data => {
-        for(const exercise of data){
-            let newExercise = new Exercise(exercise.name)
-            newExercise.render(aside)
-        }
-    })
-
-    const createFormDiv = () => {
-        const formDiv = document.createElement("div")
-        formDiv.classList.add('centered-form-div')
-        main.append(formDiv)
-    }
-
-    const removeFormDiv = () => {
-        const formDiv = document.querySelector('.centered-form-div')
-        formDiv.remove()
-    }
-
-    const renderLogin = () => {
-        // should appear when page loads
-        // should disapper after user logs in/signs up
-        createFormDiv()
-        const formDiv = document.querySelector('.centered-form-div')
-        formDiv.innerHTML = `
-            <form id="login">
-                <label>UserName</label> 
-                <input name = "name">
-                <button type = "submit"> login </button>
-                <button id="signup"> signup </button>
-            </form>
-        `
-    }
-
-    const removeLogin = () => {
-        const formDiv = document.querySelector('.centered-form-div')
-        formDiv.innerHTML = ``;
-    }
-
-    const logout =() =>{
-        main.dataset.userId = "nil"
-        clearUserNav()
-        renderLogin()
+    const navClickListener = () => {
+        let header = document.querySelector('header');
+        header.addEventListener('click', e => {
+            if(e.target.matches('h1')){
+                console.log('render home page')
+            }
+            else if (e.target.matches('.userIcon')){
+                console.log('render user page')
+            }
+            else if (e.target.matches('.logoutBtn')){
+                console.log('logout user')
+                logout()
+            }
+        })
     }
 
     const createUserEvent = () => {
@@ -73,7 +43,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
             if (target.matches("#login")){
                 User.UserLogin(target.name.value)
                 removeFormDiv()
-                // render home page
+                // this ^^ is async and we have to wait for an id
+                // hence this dumb timeout below
+                setTimeout(renderUserView, 1000)
+                
                 renderUserNav()
             }
             
@@ -130,12 +103,78 @@ document.addEventListener("DOMContentLoaded", function (e) {
         })
     }
 
-    // fetch(baseURL + 1)
-    //     .then(response => (response.json()))
-    //     .then(user => {
-    //         const newUser = new User(user)
-    //         newUser.render(content)
-    //     })
+    // fetch(exerciseBaseUrl)
+    // .then(response => response.json())
+    // .then( data => {
+    //     for(const exercise of data){
+    //         let newExercise = new Exercise(exercise.name)
+    //         newExercise.render(aside)
+    //     }
+    // })
+
+    const createFormDiv = () => {
+        const formDiv = document.createElement("div")
+        formDiv.classList.add('centered-form-div')
+        main.append(formDiv)
+    }
+
+    const removeFormDiv = () => {
+        const formDiv = document.querySelector('.centered-form-div')
+        formDiv.remove()
+    }
+
+    const renderLogin = () => {
+        // should appear when page loads
+        // should disapper after user logs in/signs up
+        createFormDiv()
+        const formDiv = document.querySelector('.centered-form-div')
+        formDiv.innerHTML = `
+            <form id="login">
+                <label>UserName</label> 
+                <input name = "name">
+                <button type = "submit"> login </button>
+                <button id="signup"> signup </button>
+            </form>
+        `
+    }
+
+    const removeLogin = () => {
+        const formDiv = document.querySelector('.centered-form-div')
+        formDiv.innerHTML = ``;
+    }
+    
+    const logout =() =>{
+        main.dataset.userId = "nil"
+        clearUserNav()
+        removeUserView()
+        renderLogin()
+    }
+
+    const renderAsideAndContentDiv = () => {
+        main.innerHTML = `
+        <aside id="aside"></aside>
+        <div class="content" id="content">
+        `
+    }
+
+    const removeUserView = () => {
+        main.innerHTML = ``
+    }
+
+    const renderUserView = () => {
+        renderAsideAndContentDiv()
+        let mainElement = document.querySelector("main")
+        // console.log(mainElement)
+        let id = mainElement.dataset.userId
+        console.log(mainElement.dataset.userId)
+        const content = document.querySelector("#content")
+        fetch(baseURL + `${mainElement.dataset.userId}`)
+            .then(response => (response.json()))
+            .then(user => {
+                const newUser = new User(user)
+                newUser.render(content)
+            })
+    }
 
     const renderUserNav = () => {
         let userIcon = document.createElement("p");
@@ -151,25 +190,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         document.querySelector('#userNav').innerHTML = '';
     }
 
-    const navClickListener = () => {
-        let header = document.querySelector('header');
-        header.addEventListener('click', e => {
-            if(e.target.matches('h1')){
-                console.log('render home page')
-            }
-            else if (e.target.matches('.userIcon')){
-                console.log('render user page')
-            }
-            else if (e.target.matches('.logoutBtn')){
-                console.log('logout user')
-                logout()
-            }
-        })
-    }
-    
     navClickListener()
-
-    // invoke upon login
     // renderUserNav()
     renderLogin()
     createUserEvent()

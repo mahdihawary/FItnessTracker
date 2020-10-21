@@ -5,6 +5,7 @@ class User {
     }
 
     render(node) {
+        console.log(this)
         const userDiv = document.createElement("div")
         userDiv.innerHTML = `<ul>
         <li>${this.name}</li>
@@ -12,7 +13,7 @@ class User {
         </ul>
         `
         node.append(userDiv)
-        
+
     }
     static create(node){
         const form = document.createElement("form")
