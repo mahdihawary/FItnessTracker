@@ -27,7 +27,23 @@ document.addEventListener("DOMContentLoaded", function (e) {
             }
         })
     }
-
+//     const navClickListener = () => {
+//         let header = document.querySelector('header');
+//         header.addEventListener('click', e => {
+//             if(e.target.matches('h1')){
+//                 console.log('render home page')
+//             }
+//             else if (e.target.matches('.userIcon')){
+//                 console.log('render user page')
+//             }
+//             else if (e.target.matches('.logoutBtn')){
+//                 console.log('logout user')
+//             }
+//             else if (e.target.matches('.statsButton')) {
+//                 getUserStats()
+//             }
+//         })
+//     }
     const createUserEvent = () => {
         const formDiv = document.querySelector('.centered-form-div')
         document.addEventListener('click', (e) => {
@@ -202,23 +218,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         document.querySelector('#userNav').innerHTML = '';
     }
 
-//     const navClickListener = () => {
-//         let header = document.querySelector('header');
-//         header.addEventListener('click', e => {
-//             if(e.target.matches('h1')){
-//                 console.log('render home page')
-//             }
-//             else if (e.target.matches('.userIcon')){
-//                 console.log('render user page')
-//             }
-//             else if (e.target.matches('.logoutBtn')){
-//                 console.log('logout user')
-//             }
-//             else if (e.target.matches('.statsButton')) {
-//                 getUserStats()
-//             }
-//         })
-//     }
     const getUserStats = () =>{
         const userId = document.querySelector("main").dataset.userId
         fetch(baseURL+userId)
