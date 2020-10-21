@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const routineURL = "http://localhost:3000/api/v1/routine/"
 
     const main = document.querySelector("main")
-    // const content = document.querySelector("#content")
+    const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
     // const formDiv = document.querySelector('.centered-form-div')
 
@@ -48,6 +48,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 User.UserLogin(target.name.value)
                 Render.removeFormDiv()
                 Render.renderUserNav()
+                // getCardioWeek() 
+
             }
             
             else if(target.matches('#newDay')){
@@ -145,24 +147,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
             console.log(routine)
             })
     }
-    const renderGraph = (data, count) =>{
-        const canvas = document.createElement("canvas")
-        canvas.innerHTML =`
-        < canvas id = "graph" width = "400" height = "400" > < /canvas>`
-        let graph = new Chart(canvas, {
-            type: 'doughnut',
-                data: {
-                    
-                },
-                options: options
-        })
-    }
-
 
     navClickListener()
-    // renderUserNav()
-    // renderLogin()
     Render.renderLogin()
     createUserEvent()
     submitListener()
+
 })

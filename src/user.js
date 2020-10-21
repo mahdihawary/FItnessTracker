@@ -1,4 +1,7 @@
+
+
 class User {
+
     constructor(user) {
         this.name = user.name
         this.weight = user.weight
@@ -42,14 +45,55 @@ class User {
         const baseURL = "http://localhost:3000/api/v1/users/"
         return fetch(baseURL)
             .then(response => response.json())
-            .then(users =>{
+            .then(users => {
                 const main = document.querySelector("main")
                 const currentUser = users.find(user => user.name == userName)
                 main.dataset.userId = currentUser.id
                 User.renderUserView(currentUser)
+                User.getCardioWeek(currentUser)
             })
     }
 
+    static getCardioWeek(currentUser){
+        const baseURL = "http://localhost:3000/api/v1/users/"
+        const user_id = currentUser.id
+        console.log("getCardioWeek says:" , user_id)
+        fetch(baseURL + user_id)
+            .then(response => (response.json()))
+            .then(user =>{
+                console.log(user.data.attributes)
+                const strengthCount = user.data.attributes.strength_week.length
+                const cardioCount = user.data.attributes.cardio_week.length
+                User.renderGraph(cardioCount, strengthCount)
+            })
+    }
+
+    static renderGraph ( cardioCount, strengthCount){
+        const canvas = document.createElement("canvas")
+        console.log(canvas)
+        Render.renderAsideAndContentDiv()
+        canvas.classList.add("graph")
+        let graph = new Chart(canvas, {
+            type: 'doughnut',
+                data: {
+                        datasets: [{
+                            data: [cardioCount, strengthCount]
+                        }],
+                    
+                    labels: [
+                        `cardio`
+                        ,`strength `
+                    ]
+                },
+                options: {
+                    title: {
+                    display: true,
+                    text: 'Graph'
+                }
+            }
+        })
+        content.append(canvas)
+    }
     
 
     
