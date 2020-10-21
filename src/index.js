@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 User.UserLogin(target.name.value)
                 Render.removeFormDiv()
                 Render.renderUserNav()
-                getCardioWeek() 
+                // getCardioWeek() 
 
             }
             
@@ -113,36 +113,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
     //     }
     // })
 
-    // const createFormDiv = () => {
-    //     const formDiv = document.createElement("div")
-    //     formDiv.classList.add('centered-form-div')
-    //     main.append(formDiv)
-    // }
-
-    // const removeFormDiv = () => {
-    //     const formDiv = document.querySelector('.centered-form-div')
-    //     formDiv.remove()
-    // }
-
-    // const renderLogin = () => {
-    //     // should appear when page loads
-    //     // should disapper after user logs in/signs up
-    //     createFormDiv()
-    //     const formDiv = document.querySelector('.centered-form-div')
-    //     formDiv.innerHTML = `
-    //         <form id="login">
-    //             <label>UserName</label> 
-    //             <input name = "name">
-    //             <button type = "submit"> login </button>
-    //             <button id="signup"> signup </button>
-    //         </form>
-    //     `
-    // }
-
-    // const removeLogin = () => {
-    //     const formDiv = document.querySelector('.centered-form-div')
-    //     formDiv.innerHTML = ``;
-    // }
     
     const logout =() =>{
         main.dataset.userId = "nil"
@@ -150,50 +120,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         Render.removeUserView()
         Render.renderLogin()
     }
-
-    
-
-    // const removeUserView = () => {
-    //     main.innerHTML = ``
-    // }
-
-    // const renderUserView = () => {
-    //     renderAsideAndContentDiv()
-    //     let mainElement = document.querySelector("main")
-    //     // console.log(mainElement)
-    //     let id = mainElement.dataset.userId
-    //     console.log(mainElement.dataset.userId)
-    //     const content = document.querySelector("#content")
-    //     fetch(baseURL + `${mainElement.dataset.userId}`)
-    //         .then(response => (response.json()))
-    //         .then(user => {
-    //             const newUser = new User(user)
-    //             newUser.render(content)
-    //         })
-    // }
-        // fetch(baseURL + 1)
-        // .then(response => (response.json()))
-        // .then(user => {
-        //     const newUser = new User(user)
-        //     newUser.render(content)
-        // })
-
-    // const renderUserNav = () => {
-    //     let userIcon = document.createElement("p");
-    //     userIcon.classList.add('userIcon');
-    //     userIcon.textContent = `User-Name Here`
-    //     let logoutBtn = document.createElement("button");
-    //     logoutBtn.classList.add('logoutBtn');
-    //     logoutBtn.textContent = `Logout`
-    //     let statsButton = document.createElement("button");
-    //     statsButton.classList.add('statsButton');
-    //     statsButton.textContent = `Stats`
-    //     document.querySelector('#userNav').append(userIcon, logoutBtn, statsButton)
-    // }
-
-    // const clearUserNav = () => {
-    //     document.querySelector('#userNav').innerHTML = '';
-    // }
 
     const getUserStats = () =>{
         const userId = document.querySelector("main").dataset.userId
@@ -209,22 +135,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(exerciseBaseUrl)
         .then(response => response.json())
         .then( data => {
-            
-                const routineForm = document.createElement("form")
-                routineForm.innerHTML =`
-                <form id ="routine">
-                < label >Routine name< /label>  
-                <input name = "name" >
-                <select name = "exercises" id = "exercise">
-                </select>
-                < button type = "submit" > Create Routine < /button>
-                < /form>`
-            for (const exercise of data) {
-                let exerciseOption = `<option value = "${exercise.id}" > ${exercise.name} </option>`
-                routineForm.append(exerciseOption)
-            }
-
-            
+            Render.createRoutineForm(data)
         })
     }
 
@@ -237,51 +148,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
             })
     }
 
-    const getCardioWeek=()=>{
-        const user_id = 39
-        console.log(user_id)
-        fetch(baseURL + user_id)
-            .then(response => (response.json()))
-            .then(user =>{
-                console.log(user.data.attributes)
-                const strengthCount = user.data.attributes.strength_week.length
-                const cardioCount = user.data.attributes.cardio_week.length
-                renderGraph(cardioCount, strengthCount)
-            })
-    }
-
-    const renderGraph =( cardioCount, strengthCount) =>{
-        const canvas = document.createElement("canvas")
-        console.log(canvas)
-        Render.renderAsideAndContentDiv()
-        canvas.classList.add("graph")
-        let graph = new Chart(canvas, {
-            type: 'doughnut',
-                data: {
-                        datasets: [{
-                            data: [cardioCount, strengthCount]
-                        }],
-                    
-                    labels: [
-                        `cardio`
-                        ,`strength `
-                    ]
-                },
-                options: {
-                    title: {
-                    display: true,
-                    text: 'Graph'
-                }
-            }
-        })
-        main.append(canvas)
-    }
-
-
     navClickListener()
-    // renderUserNav()
-    // renderLogin()
     Render.renderLogin()
     createUserEvent()
     submitListener()
+
 })

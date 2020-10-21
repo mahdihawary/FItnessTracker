@@ -78,4 +78,20 @@ class Render{
         document.querySelector("main").innerHTML = ``
     }
 
+    static createRoutineForm(data){
+        const routineForm = document.createElement("form")
+            routineForm.innerHTML =`
+            <form id ="routine">
+            < label >Routine name< /label>  
+            <input name = "name" >
+            <select name = "exercises" id = "exercise">
+            </select>
+            < button type = "submit" > Create Routine < /button>
+            < /form>`
+            for (const exercise of data) {
+                let exerciseOption = `<option value = "${exercise.id}" > ${exercise.name} </option>`
+                routineForm.append(exerciseOption)
+            }
+    }
+
 }
