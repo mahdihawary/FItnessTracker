@@ -44,6 +44,13 @@ main {
   column-gap: 10vw;
 }
 
+.centered-form-div {
+  width: 60vw;
+  margin: 10vh 10vw;
+  border: 1px solid #008844;
+  padding: 10vh 10vw;
+}
+
 aside {
   border: 1px solid #ff6000;
   width: 25vw;

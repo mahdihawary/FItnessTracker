@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
     const main = document.querySelector("main")
-
+    // const formDiv = document.querySelector('.centered-form-div')
 
     fetch(exerciseBaseUrl)
     .then(response => response.json())
@@ -18,48 +18,63 @@ document.addEventListener("DOMContentLoaded", function (e) {
         }
     })
 
-    const renderLogin = () => {
+    const createFormDiv = () => {
         const formDiv = document.createElement("div")
-        formDiv.innerHTML = `<div>
-        <form id="login">
-                <label> UserName </label> 
+        formDiv.classList.add('centered-form-div')
+        main.append(formDiv)
+    }
+
+    const removeFormDiv = () => {
+        const formDiv = document.querySelector('.centered-form-div')
+        formDiv.remove()
+    }
+
+    const renderLogin = () => {
+        // should appear when page loads
+        // should disapper after user logs in/signs up
+        createFormDiv()
+        const formDiv = document.querySelector('.centered-form-div')
+        formDiv.innerHTML = `
+            <form id="login">
+                <label>UserName</label> 
                 <input name = "name">
                 <button type = "submit"> login </button>
-        </form>                    
-                </div>
+                <button id="signup"> signup </button>
+            </form>
         `
-        main.append(formDiv)
+    }
+
+    const removeLogin = () => {
+        const formDiv = document.querySelector('.centered-form-div')
+        formDiv.innerHTML = ``;
     }
 
     const logout =() =>{
         main.dataset.userId = "nil"
+        clearUserNav()
         renderLogin()
     }
 
-
-
-
     const createUserEvent = () => {
+        const formDiv = document.querySelector('.centered-form-div')
         document.addEventListener('click', (e) => {
             const target = e.target
-
             if (target.matches("#signup")) {
-                User.create(content)
-            }
-
-            if (target.matches("#logout")){
-                logout()
+                removeLogin()
+                User.create(formDiv)
             }
         })
     }
+
     const submitListener = () => {
         document.addEventListener('submit', (e) => {
             e.preventDefault()
             const target = e.target
             if (target.matches("#login")){
-              User.UserLogin(target.name.value)
-                
-
+                User.UserLogin(target.name.value)
+                removeFormDiv()
+                // render home page
+                renderUserNav()
             }
             
             else if(target.matches('#newDay')){
@@ -90,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             }
             else if(target.matches('#newUser')){
-                console.log('newUser submit')
+                // console.log('newUser submit')
                 options = {
                     method: "POST",
                     headers: {
@@ -105,18 +120,22 @@ document.addEventListener("DOMContentLoaded", function (e) {
     
                 fetch(baseURL, options)
                     .then(response => response.json())
-                    .then(console.log)
-                    target.reset()
+                    .then(user => {
+                        // console.log('newUser')
+                        target.reset()
+                        removeFormDiv()
+                        renderLogin()
+                    })
             }
         })
     }
 
-    fetch(baseURL + 1)
-        .then(response => (response.json()))
-        .then(user => {
-            const newUser = new User(user)
-            newUser.render(content)
-        })
+    // fetch(baseURL + 1)
+    //     .then(response => (response.json()))
+    //     .then(user => {
+    //         const newUser = new User(user)
+    //         newUser.render(content)
+    //     })
 
     const renderUserNav = () => {
         let userIcon = document.createElement("p");
@@ -143,12 +162,15 @@ document.addEventListener("DOMContentLoaded", function (e) {
             }
             else if (e.target.matches('.logoutBtn')){
                 console.log('logout user')
+                logout()
             }
         })
     }
-
+    
     navClickListener()
-    renderUserNav()
+
+    // invoke upon login
+    // renderUserNav()
     renderLogin()
     createUserEvent()
     submitListener()
