@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 console.log('logout user')
                 logout()
             }
+                else if (e.target.matches('.statsButton')) {
+                getUserStats()
+            }
         })
     }
 
@@ -175,6 +178,12 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 newUser.render(content)
             })
     }
+        fetch(baseURL + 1)
+        .then(response => (response.json()))
+        .then(user => {
+            const newUser = new User(user)
+            newUser.render(content)
+        })
 
     const renderUserNav = () => {
         let userIcon = document.createElement("p");
@@ -183,11 +192,41 @@ document.addEventListener("DOMContentLoaded", function (e) {
         let logoutBtn = document.createElement("button");
         logoutBtn.classList.add('logoutBtn');
         logoutBtn.textContent = `Logout`
-        document.querySelector('#userNav').append(userIcon, logoutBtn)
+        let statsButton = document.createElement("button");
+        statsButton.classList.add('statsButton');
+        statsButton.textContent = `Stats`
+        document.querySelector('#userNav').append(userIcon, logoutBtn, statsButton)
     }
 
     const clearUserNav = () => {
         document.querySelector('#userNav').innerHTML = '';
+    }
+
+//     const navClickListener = () => {
+//         let header = document.querySelector('header');
+//         header.addEventListener('click', e => {
+//             if(e.target.matches('h1')){
+//                 console.log('render home page')
+//             }
+//             else if (e.target.matches('.userIcon')){
+//                 console.log('render user page')
+//             }
+//             else if (e.target.matches('.logoutBtn')){
+//                 console.log('logout user')
+//             }
+//             else if (e.target.matches('.statsButton')) {
+//                 getUserStats()
+//             }
+//         })
+//     }
+    const getUserStats = () =>{
+        const userId = document.querySelector("main").dataset.userId
+        fetch(baseURL+userId)
+            .then(response => (response.json()))
+            .then(user => {
+                console.log(user)
+            })
+            
     }
 
     navClickListener()
