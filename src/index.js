@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const routineURL = "http://localhost:3000/api/v1/routine/"
 
     const main = document.querySelector("main")
-    // const content = document.querySelector("#content")
+    const content = document.querySelector("#content")
     const aside = document.querySelector("#aside")
     // const formDiv = document.querySelector('.centered-form-div')
 
@@ -48,6 +48,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 User.UserLogin(target.name.value)
                 Render.removeFormDiv()
                 Render.renderUserNav()
+                getCardioWeek() 
+
             }
             
             else if(target.matches('#newDay')){
@@ -234,17 +236,45 @@ document.addEventListener("DOMContentLoaded", function (e) {
             console.log(routine)
             })
     }
-    const renderGraph =(data, count) =>{
+
+    const getCardioWeek=()=>{
+        const user_id = 39
+        console.log(user_id)
+        fetch(baseURL + user_id)
+            .then(response => (response.json()))
+            .then(user =>{
+                console.log(user.data.attributes)
+                const strengthCount = user.data.attributes.strength_week.length
+                const cardioCount = user.data.attributes.cardio_week.length
+                renderGraph(cardioCount, strengthCount)
+            })
+    }
+
+    const renderGraph =( cardioCount, strengthCount) =>{
         const canvas = document.createElement("canvas")
-        canvas.innerHTML =`
-        < canvas id = "graph" width = "400" height = "400" > < /canvas>`
+        console.log(canvas)
+        Render.renderAsideAndContentDiv()
+        canvas.classList.add("graph")
         let graph = new Chart(canvas, {
             type: 'doughnut',
                 data: {
+                        datasets: [{
+                            data: [cardioCount, strengthCount]
+                        }],
                     
+                    labels: [
+                        `cardio`
+                        ,`strength `
+                    ]
                 },
-                options: options
+                options: {
+                    title: {
+                    display: true,
+                    text: 'Graph'
+                }
+            }
         })
+        main.append(canvas)
     }
 
 
