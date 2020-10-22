@@ -57,6 +57,27 @@ aside {
   padding: 2.5vh 2.5vw
 }
 
+.aside-header {
+  display: flex;
+  flex-flow: wrap;
+}
+
+.aside-header h2 {
+  width: 100%;
+}
+
+.aside-tab {
+  width: 50%;
+  font-size: .8em;
+  color: #808080;
+  margin-top: 1.5%;
+}
+
+.selected-tab {
+  font-size: .9em;
+  color: #303030;
+}
+
 .aside-box{
   border: 1px solid #303060;
   padding: 1vh 1vw;

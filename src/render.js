@@ -88,11 +88,14 @@ class Render{
     static renderExercisesToAside(exercises) {
         const aside = document.querySelector("#aside");
         aside.innerHTML = ``;
-        let asideTitle = document.createElement('h2');
-        asideTitle.classList.add('asideTitle');
-        asideTitle.textContent = `Exercises`;
-        aside.append(asideTitle);
-
+        let asideHeader = document.createElement('div');
+        asideHeader.classList.add('aside-header')
+        asideHeader.innerHTML = `
+            <h2>Exercises</h2>
+            <h3 class="aside-tab selected-tab" data-name="selected">Strength</h3>
+            <h3 class="aside-tab" data-name="">Cardio</h3>
+        `
+        aside.append(asideHeader);
         const unique = [];
         let distincExercises = [];
         for( let i=0; i < exercises.length; i++){
@@ -109,7 +112,38 @@ class Render{
             asideBox.textContent = `${exercise.name}`
             aside.append(asideBox)
         }
+        Render.showKindOfExercises()
     }
+
+    static showKindOfExercises() {
+        // console.log("Render.showKinds running")
+        let tabs = document.querySelectorAll('.aside-tab')
+        let exercises = document.querySelectorAll('.aside-box')
+
+        for(const exercise of exercises){
+            exercise.style.display = "none"
+        }
+
+        if( tabs[0].dataset.name === "selected" ){
+            console.log('strength selected')
+            for(const ex of exercises){
+                if (ex.dataset.kind === "strength"){
+                    ex.style.display = "block";
+                    console.log("strength exercise")
+                }
+            }
+        }
+        else if( tabs[1].dataset.name === "selected" ) {
+            console.log('cardio selected')
+            for(const ex of exercises){
+                if (ex.dataset.kind === "cardio"){
+                    ex.style.display = "block";
+                    console.log("cardio exercise")
+                }
+            }
+        }
+    }
+
 
     static renderExerciseGraphData(days){
         let content = document.querySelector('#content')

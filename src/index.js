@@ -116,6 +116,17 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
                 getUserStats()
             }
+            else if(e.target.matches('.aside-tab')){
+                let tabs = document.querySelectorAll('.aside-tab')
+                for(const tab of tabs){
+                    tab.dataset.name = "not";
+                    tab.classList.remove("selected-tab")
+                }
+                e.target.dataset.name = "selected"
+                e.target.classList.add("selected-tab")
+                Render.showKindOfExercises()
+            }
+
         })
     }
 
