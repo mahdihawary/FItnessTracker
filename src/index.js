@@ -52,7 +52,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
             } else if (target.matches('#newDay')) {
                 console.log('newDay submit')
-
+                const exercise = target.parentElement
+                console.log(exercise)
+                if (exercise.dataset.kind =="cardio"){
                 options = {
                     method: "POST",
                     headers: {
@@ -63,18 +65,31 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         date: target.date.value,
                         user_id: target.userId.value,
                         exercise_id: target.exerciseId.value,
-                        weight: target.weight.value,
-                        rep: target.reps.value,
-                        set: target.sets.value,
                         distance: target.distance.value,
                         time: target.time.value
                     })
+                }}
+                else if (exercise.dataset.kind == "strength") {
+                    options = {
+                        method: "POST",
+                        headers: {
+                            "content-type": "application/json",
+                            "accept": "application/json"
+                        },
+                        body: JSON.stringify({
+                            date: target.date.value,
+                            user_id: target.userId.value,
+                            exercise_id: target.exerciseId.value,
+                            weight: target.weight.value,
+                            rep: target.reps.value,
+                            set: target.sets.value,
+                        })
+                    }
                 }
-
                 fetch(dayBaseUrl, options)
                     .then(response => response.json())
                     .then(console.log)
-                target.reset()
+                target.remove()
 
             } else if (target.matches('#newUser')) {
                 // console.log('newUser submit')
@@ -125,17 +140,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     const exerciseClickListener = () => {
         document.addEventListener('click', e => {
-            if(e.target.matches('div[data-exercise-id]')){
+            if (e.target.matches('div[data-exercise-id]')) {
                 const content = document.querySelector('#content')
                 content.dataset.exerciseId = e.target.dataset.exerciseId
                 content.dataset.kind = e.target.dataset.kind
                 content.dataset.exerciseName = e.target.textContent
 
                 getUserStats()
-            }
-            else if(e.target.matches('.aside-tab')){
+            } else if (e.target.matches('.aside-tab')) {
                 let tabs = document.querySelectorAll('.aside-tab')
-                for(const tab of tabs){
+                for (const tab of tabs) {
                     tab.dataset.name = "not";
                     tab.classList.remove("selected-tab")
                 }
@@ -174,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 // render exercise stats to #content 
                 Render.renderExerciseGraphData(user.data.attributes.days_month)
                 Render.renderExercisesToAside(user.data.attributes.exercises)
-            })       
+            })
 
     }
     const asideDivListener = () => {
@@ -241,12 +255,15 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     const renderDayCardioForm = (exerciseEl) => {
         const main = document.querySelector("main")
-        exerciseEl.dataset.exerciseId
-        main.dataset.userId
+        const date = getDate()
         const form = document.createElement('form')
+        form.id ="newDay"
         form.innerHTML = `
         <label> distance </label> 
         <input name = "distance">
+        <input type="hidden" name="date" value="${date}">
+        <input type="hidden" name="userId" value="${main.dataset.userId}">
+        <input type="hidden" name="exerciseId" value="${exerciseEl.dataset.exerciseId}">
         <label> time </label>
         <input name = "time">
         <button type ="submit" id ="newDay"> submit </button>
@@ -255,13 +272,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
     const renderDayStrengthForm = (exerciseEl) => {
         const main = document.querySelector("main")
-        exerciseEl.dataset.exerciseId
-        main.dataset.userId
+        const date = getDate()
         const form = document.createElement('form')
+         form.id = "newDay"
         form.innerHTML = `
         <label> weight </label> 
         <input name = "weight">
         <label> reps </label>
+        <input type = "hidden" name = "date" value = "${date}">
+        <input type = "hidden" name = "userId" value = "${main.dataset.userId}">
+        <input type = "hidden" name = "exerciseId" value = "${exerciseEl.dataset.exerciseId}">
         <input name = "reps">
         <label> sets </label> 
         <input name = "sets">
@@ -296,6 +316,19 @@ document.addEventListener("DOMContentLoaded", function (e) {
             .then(routine => {
                 Render.renderRoutine(routine)
             })
+    }
+
+    const getDate = () => {
+        let date = new Date();
+        let dd = String(date.getDate()).padStart(2, '0');
+        let mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+        let yyyy = date.getFullYear();
+
+        date = yyyy + '/' + mm + '/' + dd;
+        return date
+        // date.toLocaleDateString()
+        console.log(date)
+        return date 
     }
 
     exerciseClickListener();
