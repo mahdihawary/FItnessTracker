@@ -51,6 +51,7 @@ class User {
                 main.dataset.userId = currentUser.id
                 User.renderUserView(currentUser)
                 User.getCardioWeek(currentUser)
+                User.getRoutines(currentUser)
             })
     }
 
@@ -61,7 +62,6 @@ class User {
         fetch(baseURL + user_id)
             .then(response => (response.json()))
             .then(user =>{
-                console.log(user.data.attributes)
                 const strengthCount = user.data.attributes.strength_week.length
                 const cardioCount = user.data.attributes.cardio_week.length
                 User.renderGraph(cardioCount, strengthCount)
@@ -94,7 +94,34 @@ class User {
         })
         content.append(canvas)
     }
-    
+        static renderRoutines = (routines) => {
+            const aside = document.querySelector("#aside")
+            const routineList = document.createElement("ul")
+            for(const routine of routines){
+                let routineLi = document.createElement("li")
+                routineLi.innerHTML = `${routine.name}
+                <button id ="remove-routine">X</button>`
+                routineLi.dataset.routineId = `${routine.id}`
+                routineLi.classList = "routineLi"
+                routineList.append(routineLi)
+            }
+            const addRoutineButton = document.createElement('button')
+            addRoutineButton.classList.add()
+            aside.append(routineList)
+
+
+        }
+
+        static getRoutines = (currentUser) => {
+            const baseURL = "http://localhost:3000/api/v1/users/"
+            console.log(currentUser)
+            fetch(baseURL + currentUser.id)
+                .then(response => (response.json()))
+                .then(user => {
+                    console.log(user.data.attributes.routines)
+                    User.renderRoutines(user.data.attributes.routines)
+                })
+        }
 
     
 
