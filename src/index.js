@@ -326,6 +326,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
         date = yyyy + '/' + mm + '/' + dd;
         return date
+        // date.toLocaleDateString()
+        console.log(date)
+        return date 
     }
 
     exerciseClickListener();
