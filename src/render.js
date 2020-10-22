@@ -171,6 +171,13 @@ class Render {
                 // ul.append(li)
             }
         }
+    currentExerciseArray.sort(function (a, b) {
+    // Turn your strings into dates, and then subtract them
+    // to get a value that is either negative, positive, or zero.
+    return new Date(a.date) - new Date(b.date);
+        })
+        console.log(currentExerciseArray)
+
         let weight = []
         for (let day of currentExerciseArray) {
             weight.push(day.weight)
@@ -192,7 +199,8 @@ class Render {
 
         let speed = [];
         for (let i = 0; i < time.length; i++) {
-            speed.push(distance[i] / time[i]);
+            speed.push((distance[i] / time[i])*60);
+            console.log(distance[i],  time[i])
         }
         console.log(speed)
         const canvas = document.createElement("canvas")
