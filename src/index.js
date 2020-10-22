@@ -23,8 +23,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 console.log('logout user')
                 logout()
             }
-                else if (e.target.matches('.statsButton')) {
+            else if (e.target.matches('.statsButton')) {
                 getUserStats()
+                Render.removeContentDivContent()
+                Render.removeAsideDivContent()
             }
         })
     }
@@ -104,6 +106,20 @@ document.addEventListener("DOMContentLoaded", function (e) {
         })
     }
 
+    const exerciseClickListener = () => {
+        document.addEventListener('click', e => {
+            if(e.target.matches('div[data-exercise-id]')){
+                const content = document.querySelector('#content')
+                content.dataset.exerciseId = e.target.dataset.exerciseId
+                content.dataset.kind = e.target.dataset.kind
+                content.dataset.exerciseName = e.target.textContent
+
+                getUserStats()
+            }
+        })
+    }
+
+
     // fetch(exerciseBaseUrl)
     // .then(response => response.json())
     // .then( data => {
@@ -126,9 +142,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(baseURL+userId)
             .then(response => (response.json()))
             .then(user => {
-                console.log(user)
-            })
-            
+                // console.log(user.data.attributes.exercises)
+                // render exercise stats to #content 
+                Render.renderExerciseGraphData(user.data.attributes.days_month)
+                Render.renderExercisesToAside(user.data.attributes.exercises)
+            })       
     }
     const renderRoutineForm = () => { //will fetch exercises from database to allow selection
 
@@ -144,10 +162,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(routineURL, options)
             .then(response => (response.json()))
             .then(routine => {
-            console.log(routine)
+            // console.log(routine)
             })
     }
 
+    exerciseClickListener()
     navClickListener()
     Render.renderLogin()
     createUserEvent()
