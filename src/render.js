@@ -116,7 +116,6 @@ class Render {
     }
 
     static showKindOfExercises() {
-        // console.log("Render.showKinds running")
         let tabs = document.querySelectorAll('.aside-tab')
         let exercises = document.querySelectorAll('.aside-box')
 
@@ -124,19 +123,15 @@ class Render {
             exercise.style.display = "none"
         }
         if (tabs[0].dataset.name === "selected") {
-            console.log('strength selected')
             for (const ex of exercises) {
                 if (ex.dataset.kind === "strength") {
                     ex.style.display = "block";
-                    // console.log("strength exercise")
                 }
             }
         } else if (tabs[1].dataset.name === "selected") {
-            console.log('cardio selected')
             for (const ex of exercises) {
                 if (ex.dataset.kind === "cardio") {
                     ex.style.display = "block";
-                    // console.log("cardio exercise")
                 }
             }
         }
@@ -146,9 +141,8 @@ class Render {
         let content = document.querySelector('#content')
         content.innerHTML = ``;
         let exerciseId = content.dataset.exerciseId
-        // console.log(exerciseId)
-        // console.log(document.querySelectorAll('.aside-box')[0].dataset.exerciseId)
-        // if(!exerciseId){
+
+        // if(exerciseId){
         //     exerciseId = document.querySelectorAll('.aside-box')[0].dataset.exerciseId
         // }
         let h2 = document.createElement('h2');
@@ -167,7 +161,6 @@ class Render {
                     <p>Distance: ${day.distance}</p>
                     <p>Time: ${day.time}</p>
                 `
-                // console.log(day)
                 // ul.append(li)
             }
         }
@@ -176,7 +169,6 @@ class Render {
     // to get a value that is either negative, positive, or zero.
     return new Date(a.date) - new Date(b.date);
         })
-        console.log(currentExerciseArray)
 
         let weight = []
         for (let day of currentExerciseArray) {
@@ -200,12 +192,10 @@ class Render {
         let speed = [];
         for (let i = 0; i < time.length; i++) {
             speed.push((distance[i] / time[i])*60);
-            console.log(distance[i],  time[i])
         }
-        console.log(speed)
         const canvas = document.createElement("canvas")
         const canvas2 = document.createElement("canvas")
-        // console.log(canvas)
+
         canvas.classList.add("graph")
         canvas2.classList.add("graph")
         if (content.dataset.kind == "cardio") {
@@ -214,7 +204,7 @@ class Render {
                 data: {
                     labels: date,
                     datasets: [{
-                        label: 'My First dataset',
+                        label: `${content.dataset.exerciseName}`,
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: distance
@@ -228,7 +218,7 @@ class Render {
                 data: {
                     labels: date,
                     datasets: [{
-                        label: 'My First dataset',
+                        label: `${content.dataset.exerciseName}`,
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: speed
@@ -243,7 +233,7 @@ class Render {
                     data: {
                         labels: date,
                         datasets: [{
-                            label: 'My First dataset',
+                            label: `${content.dataset.exerciseName}`,
                             backgroundColor: 'rgb(255, 99, 132)',
                             borderColor: 'rgb(255, 99, 132)',
                             data: weight
@@ -254,7 +244,6 @@ class Render {
             }
         }
         // content.append(h2, ul)
-        // console.log(currentExerciseArray)
 
     }
 
@@ -280,6 +269,7 @@ class Render {
         let exerciseList = document.querySelector("ul[data-routine-id]")
 
         const exerciseLi = document.createElement("li")
+        exerciseLi.classList.add('aside-box')
         exerciseLi.innerHTML = `${exercise.name}
             <button id ="exLog">Log exercise</button>`
         exerciseLi.dataset.exerciseId = exercise.id
