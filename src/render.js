@@ -123,13 +123,12 @@ class Render{
         for(const exercise of exercises){
             exercise.style.display = "none"
         }
-
         if( tabs[0].dataset.name === "selected" ){
             console.log('strength selected')
             for(const ex of exercises){
                 if (ex.dataset.kind === "strength"){
                     ex.style.display = "block";
-                    console.log("strength exercise")
+                    // console.log("strength exercise")
                 }
             }
         }
@@ -138,7 +137,7 @@ class Render{
             for(const ex of exercises){
                 if (ex.dataset.kind === "cardio"){
                     ex.style.display = "block";
-                    console.log("cardio exercise")
+                    // console.log("cardio exercise")
                 }
             }
         }
@@ -149,13 +148,14 @@ class Render{
         let content = document.querySelector('#content')
         content.innerHTML = ``;
         let exerciseId = content.dataset.exerciseId
-        // if(exerciseId === undefined){
-        //     exerciseId = document.querySelectorAll('.aside-box')[0].dataset.exerciseId
-        // }
+        console.log(exerciseId)
+        console.log(document.querySelectorAll('.aside-box')[0].dataset.exerciseId)
+        if(exerciseId){
+            exerciseId = document.querySelectorAll('.aside-box')[0].dataset.exerciseId
+        }
         let h2 = document.createElement('h2');
         h2.textContent = content.dataset.exerciseName
         let ul = document.createElement('ul');
-        console.log(exerciseId)
         let currentExerciseArray = [];
         for(const day of days){
             if( exerciseId == day.exercise_id){
