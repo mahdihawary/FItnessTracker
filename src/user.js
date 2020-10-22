@@ -65,7 +65,7 @@ class User {
                 const strengthCount = user.data.attributes.strength_week.length
                 const cardioCount = user.data.attributes.cardio_week.length
                 User.renderGraph(cardioCount, strengthCount)
-                User.getRecentRoutines(currentUser)
+                // User.getRecentRoutines(currentUser)
             })
     }
 
@@ -115,11 +115,11 @@ class User {
 
         static getRoutines = (currentUser) => {
             const baseURL = "http://localhost:3000/api/v1/users/"
-            console.log(currentUser)
+            // console.log(currentUser)
             fetch(baseURL + currentUser.id)
                 .then(response => (response.json()))
                 .then(user => {
-                    console.log(user.data.attributes.routines)
+                    // console.log(user.data.attributes.routines)
                     User.renderRoutines(user.data.attributes.routines)
                 })
         }

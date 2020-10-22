@@ -195,4 +195,35 @@ class Render{
             }
     }
 
+    static renderRoutineItems(exercise){
+        let exerciseList = document.querySelector("ul[data-routine-id]")
+        
+            const exerciseLi = document.createElement("li")
+            exerciseLi.innerHTML = `${exercise.name}
+            <button id ="exLog">Log exercise</button>`
+            exerciseLi.dataset.exerciseId = exercise.id
+            exerciseLi.dataset.kind = exercise.kind
+            exerciseList.append(exerciseLi)
+        
+    }
+    
+    
+static renderRoutine(routine){
+    const content = document.querySelector("#content")
+    content.innerHTML = `<h3>${routine.data.attributes.name}</h3>`
+    const exerciseList = document.createElement("ul")
+    exerciseList.dataset.routineId = `${routine.data.id}`
+    exerciseList.classList.add("routineTag")
+    content.append(exerciseList)
+    for (const exercise of routine.data.attributes.exercises) {
+        // need to pass name for new exercise
+        Render.renderRoutineItems(exercise)
+    }
+    const addExercise = document.createElement("button")
+    addExercise.classList.add("addEx")
+    addExercise.textContent = `Add an exercise`
+    content.append(addExercise)
+
+}
+
 }
