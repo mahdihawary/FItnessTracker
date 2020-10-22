@@ -8,7 +8,6 @@ class User {
         this.id = user.id
     }
     render(node) {
-        // console.log(this)
         const userDiv = document.createElement("div")
         userDiv.innerHTML = `<ul>
         <li>${this.name}</li>
@@ -18,7 +17,6 @@ class User {
         node.append(userDiv)
     }
     // static create(node){
-    //     // console.log("User.create called")
     //     const form = document.createElement("form")
     //     form.setAttribute("id", "newUser")
     //     form.innerHTML =`
@@ -58,7 +56,6 @@ class User {
     static getCardioWeek(currentUser){
         const baseURL = "http://localhost:3000/api/v1/users/"
         const user_id = currentUser.id
-        // console.log("getCardioWeek says:" , user_id)
         fetch(baseURL + user_id)
             .then(response => (response.json()))
             .then(user =>{
@@ -71,7 +68,6 @@ class User {
 
     static renderGraph ( cardioCount, strengthCount){
         const canvas = document.createElement("canvas")
-        // console.log(canvas)
         Render.renderAsideAndContentDiv()
         canvas.classList.add("graph")
         let graph = new Chart(canvas, {
@@ -100,10 +96,11 @@ class User {
             const routineList = document.createElement("ul")
             for(const routine of routines){
                 let routineLi = document.createElement("li")
+                routineLi.classList.add('aside-box')
                 routineLi.innerHTML = `${routine.name}
                 <button id ="remove-routine">X</button>`
                 routineLi.dataset.routineId = `${routine.id}`
-                routineLi.classList = "routineLi"
+                routineLi.classList.add ("routineLi")
                 routineList.append(routineLi)
             }
             const addRoutineButton = document.createElement('button')
@@ -115,11 +112,9 @@ class User {
 
         static getRoutines = (currentUser) => {
             const baseURL = "http://localhost:3000/api/v1/users/"
-            // console.log(currentUser)
             fetch(baseURL + currentUser.id)
                 .then(response => (response.json()))
-                .then(user => {
-                    // console.log(user.data.attributes.routines)
+                .then(user => {)
                     User.renderRoutines(user.data.attributes.routines)
                 })
         }
