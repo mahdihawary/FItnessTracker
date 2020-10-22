@@ -58,19 +58,20 @@ class User {
     static getCardioWeek(currentUser){
         const baseURL = "http://localhost:3000/api/v1/users/"
         const user_id = currentUser.id
-        console.log("getCardioWeek says:" , user_id)
+        // console.log("getCardioWeek says:" , user_id)
         fetch(baseURL + user_id)
             .then(response => (response.json()))
             .then(user =>{
                 const strengthCount = user.data.attributes.strength_week.length
                 const cardioCount = user.data.attributes.cardio_week.length
                 User.renderGraph(cardioCount, strengthCount)
+                // User.getRecentRoutines(currentUser)
             })
     }
 
     static renderGraph ( cardioCount, strengthCount){
         const canvas = document.createElement("canvas")
-        console.log(canvas)
+        // console.log(canvas)
         Render.renderAsideAndContentDiv()
         canvas.classList.add("graph")
         let graph = new Chart(canvas, {
@@ -114,11 +115,11 @@ class User {
 
         static getRoutines = (currentUser) => {
             const baseURL = "http://localhost:3000/api/v1/users/"
-            console.log(currentUser)
+            // console.log(currentUser)
             fetch(baseURL + currentUser.id)
                 .then(response => (response.json()))
                 .then(user => {
-                    console.log(user.data.attributes.routines)
+                    // console.log(user.data.attributes.routines)
                     User.renderRoutines(user.data.attributes.routines)
                 })
         }

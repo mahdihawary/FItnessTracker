@@ -73,10 +73,110 @@ class Render{
         `
     }
 
+    static removeContentDivContent() {
+        document.querySelector("#content").innerHTML = ``
+    }
+
+    static removeAsideDivContent() {
+        document.querySelector("#aside").innerHTML = ``
+    }
 
     static removeUserView(){
         document.querySelector("main").innerHTML = ``
     }
+
+    static renderExercisesToAside(exercises) {
+        const aside = document.querySelector("#aside");
+        aside.innerHTML = ``;
+        let asideHeader = document.createElement('div');
+        asideHeader.classList.add('aside-header')
+        asideHeader.innerHTML = `
+            <h2>Exercises</h2>
+            <h3 class="aside-tab selected-tab" data-name="selected">Strength</h3>
+            <h3 class="aside-tab" data-name="">Cardio</h3>
+        `
+        aside.append(asideHeader);
+        const unique = [];
+        let distincExercises = [];
+        for( let i=0; i < exercises.length; i++){
+            if( !unique[exercises[i].id] ){
+                distincExercises.push(exercises[i])
+                unique[exercises[i].id] = 1;
+            }
+        }
+        for(let exercise of distincExercises){
+            let asideBox = document.createElement('div');
+            asideBox.classList.add('aside-box');
+            asideBox.dataset.exerciseId = exercise.id
+            asideBox.dataset.kind = exercise.kind
+            asideBox.textContent = `${exercise.name}`
+            aside.append(asideBox)
+        }
+        Render.showKindOfExercises()
+    }
+
+    static showKindOfExercises() {
+        // console.log("Render.showKinds running")
+        let tabs = document.querySelectorAll('.aside-tab')
+        let exercises = document.querySelectorAll('.aside-box')
+
+        for(const exercise of exercises){
+            exercise.style.display = "none"
+        }
+        if( tabs[0].dataset.name === "selected" ){
+            console.log('strength selected')
+            for(const ex of exercises){
+                if (ex.dataset.kind === "strength"){
+                    ex.style.display = "block";
+                    // console.log("strength exercise")
+                }
+            }
+        }
+        else if( tabs[1].dataset.name === "selected" ) {
+            console.log('cardio selected')
+            for(const ex of exercises){
+                if (ex.dataset.kind === "cardio"){
+                    ex.style.display = "block";
+                    // console.log("cardio exercise")
+                }
+            }
+        }
+    }
+
+    static renderExerciseGraphData(days){
+        let content = document.querySelector('#content')
+        content.innerHTML = ``;
+        let exerciseId = content.dataset.exerciseId
+        console.log(exerciseId)
+        console.log(document.querySelectorAll('.aside-box')[0].dataset.exerciseId)
+        if(exerciseId){
+            exerciseId = document.querySelectorAll('.aside-box')[0].dataset.exerciseId
+        }
+        let h2 = document.createElement('h2');
+        h2.textContent = content.dataset.exerciseName
+        let ul = document.createElement('ul');
+        let currentExerciseArray = [];
+        for(const day of days){
+            if( exerciseId == day.exercise_id){
+                currentExerciseArray.push(day)
+                let li = document.createElement('li');
+                li.innerHTML = `
+                    <p>Date: ${day.date}</p>
+                    <p>Weight: ${day.weight}</p>
+                    <p>Rep: ${day.rep}</p>
+                    <p>Set: ${day.set}</p>
+                    <p>Distance: ${day.distance}</p>
+                    <p>Time: ${day.time}</p>
+                `
+                console.log(day)
+                ul.append(li)
+            }
+        }
+        content.append(h2, ul)
+        // console.log(currentExerciseArray)
+
+    }
+
 
     static createRoutineForm(data){
         const routineForm = document.createElement("form")
@@ -94,5 +194,36 @@ class Render{
                 exerciseSelect.append(exerciseOption)
             }
     }
+
+    static renderRoutineItems(exercise){
+        let exerciseList = document.querySelector("ul[data-routine-id]")
+        
+            const exerciseLi = document.createElement("li")
+            exerciseLi.innerHTML = `${exercise.name}
+            <button id ="exLog">Log exercise</button>`
+            exerciseLi.dataset.exerciseId = exercise.id
+            exerciseLi.dataset.kind = exercise.kind
+            exerciseList.append(exerciseLi)
+        
+    }
+    
+    
+static renderRoutine(routine){
+    const content = document.querySelector("#content")
+    content.innerHTML = `<h3>${routine.data.attributes.name}</h3>`
+    const exerciseList = document.createElement("ul")
+    exerciseList.dataset.routineId = `${routine.data.id}`
+    exerciseList.classList.add("routineTag")
+    content.append(exerciseList)
+    for (const exercise of routine.data.attributes.exercises) {
+        // need to pass name for new exercise
+        Render.renderRoutineItems(exercise)
+    }
+    const addExercise = document.createElement("button")
+    addExercise.classList.add("addEx")
+    addExercise.textContent = `Add an exercise`
+    content.append(addExercise)
+
+}
 
 }
