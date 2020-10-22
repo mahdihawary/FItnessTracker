@@ -147,11 +147,11 @@ class Render{
         let content = document.querySelector('#content')
         content.innerHTML = ``;
         let exerciseId = content.dataset.exerciseId
-        console.log(exerciseId)
-        console.log(document.querySelectorAll('.aside-box')[0].dataset.exerciseId)
-        if(exerciseId){
-            exerciseId = document.querySelectorAll('.aside-box')[0].dataset.exerciseId
-        }
+        // console.log(exerciseId)
+        // console.log(document.querySelectorAll('.aside-box')[0].dataset.exerciseId)
+        // if(!exerciseId){
+        //     exerciseId = document.querySelectorAll('.aside-box')[0].dataset.exerciseId
+        // }
         let h2 = document.createElement('h2');
         h2.textContent = content.dataset.exerciseName
         let ul = document.createElement('ul');
@@ -216,7 +216,6 @@ static renderRoutine(routine){
     exerciseList.classList.add("routineTag")
     content.append(exerciseList)
     for (const exercise of routine.data.attributes.exercises) {
-        // need to pass name for new exercise
         Render.renderRoutineItems(exercise)
     }
     const addExercise = document.createElement("button")
