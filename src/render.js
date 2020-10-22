@@ -89,8 +89,9 @@ class Render{
             < button type = "submit" > Create Routine < /button>
             < /form>`
             for (const exercise of data) {
+                let exerciseSelect = document.querySelector("select")
                 let exerciseOption = `<option value = "${exercise.id}" > ${exercise.name} </option>`
-                routineForm.append(exerciseOption)
+                exerciseSelect.append(exerciseOption)
             }
     }
 
