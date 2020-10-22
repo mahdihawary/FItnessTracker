@@ -141,6 +141,7 @@ class Render {
         let content = document.querySelector('#content')
         content.innerHTML = ``;
         let exerciseId = content.dataset.exerciseId
+
         // if(exerciseId){
         //     exerciseId = document.querySelectorAll('.aside-box')[0].dataset.exerciseId
         // }
