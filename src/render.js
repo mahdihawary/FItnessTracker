@@ -246,6 +246,9 @@ class Render {
                         labels: {
                             fontColor: 'white'
                         }
+                    }, animation: {
+                        duration: 1000,
+                        easing: 'linear'
                     },
                     scales: {
                         xAxes: [{
@@ -266,6 +269,15 @@ class Render {
                 }
             })
             content.append(canvas)
+                    setTimeout(function () {
+                        graph.data.datasets = [{
+                            label: `${content.dataset.exerciseName} Distance`,
+                            backgroundColor: 'rgb(255, 99, 132)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            data: distance
+                        }]
+                        graph.update();
+                    }, 200)
             let graph2 = new Chart(canvas2, {
                 type: 'line',
                 data: {
@@ -282,6 +294,9 @@ class Render {
                         labels: {
                             fontColor: 'white'
                         }
+                    }, animation: {
+                        duration: 1000,
+                        easing: 'linear'
                     }
                 , scales: {
                         xAxes: [{
@@ -300,6 +315,15 @@ class Render {
                         }]}}
             })
             content.append(canvas2)
+                    setTimeout(function () {
+                        graph2.data.datasets = [{
+                            label: `${content.dataset.exerciseName} Speed in mph`,
+                            backgroundColor: 'rgb(255, 99, 132)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            data: speed,
+                        }]
+                        graph2.update();
+                    }, 200)
         } else if (content.dataset.kind == "strength") {
             {
                 let graph = new Chart(canvas, {
@@ -317,6 +341,9 @@ class Render {
                             labels: {
                                 fontColor: 'white'
                             }
+                        }, animation: {
+                            duration: 1000,
+                            easing: 'linear'
                         },
                         scales: {
                             xAxes: [{
@@ -337,6 +364,15 @@ class Render {
                     }
                 })
                 content.append(canvas)
+                        setTimeout(function () {
+                        graph.data.datasets = [{
+                            label: `${content.dataset.exerciseName} weight`,
+                            backgroundColor: 'rgb(255, 99, 132)',
+                            borderColor: 'rgb(255, 99, 132)',
+                            data: weight
+                        }]
+                        graph.update();
+                    }, 200)
             }
         }
         // content.append(h2, ul)

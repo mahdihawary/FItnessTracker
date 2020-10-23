@@ -1,5 +1,3 @@
-
-
 class User {
 
     constructor(user) {
@@ -35,11 +33,11 @@ class User {
     static renderUserView(currentUser) {
         Render.renderAsideAndContentDiv()
         const newUser = new User(currentUser)
-            newUser.render(content)
+        newUser.render(content)
     }
 
 
-    static UserLogin(userName){
+    static UserLogin(userName) {
         const baseURL = "http://localhost:3000/api/v1/users/"
         return fetch(baseURL)
             .then(response => response.json())
@@ -54,12 +52,12 @@ class User {
             })
     }
 
-    static getCardioWeek(currentUser){
+    static getCardioWeek(currentUser) {
         const baseURL = "http://localhost:3000/api/v1/users/"
         const user_id = currentUser.id
         fetch(baseURL + user_id)
             .then(response => (response.json()))
-            .then(user =>{
+            .then(user => {
                 const strengthCount = user.data.attributes.strength_week.length
                 const cardioCount = user.data.attributes.cardio_week.length
                 User.renderGraph(cardioCount, strengthCount)
@@ -67,70 +65,81 @@ class User {
             })
     }
 
-    static renderGraph ( cardioCount, strengthCount){
+    static renderGraph(cardioCount, strengthCount) {
         const canvas = document.createElement("canvas")
         Render.renderAsideAndContentDiv()
         canvas.classList.add("graph")
         let graph = new Chart(canvas, {
             type: 'doughnut',
-                data: {
-                        datasets: [{
-                            data: [cardioCount, strengthCount],
-                            backgroundColor: ['#092fd6', '#ff0000']
-                        }],
-                    
-                    labels: [
-                        `cardio`
-                        ,`strength `
-                    ]
-                },
-                options: {
-                    title: {
+            data: {
+                datasets: [{
+                    data: [cardioCount, strengthCount],
+                    backgroundColor: ['#092fd6', '#ff0000']
+                }],
+
+                labels: [
+                    `cardio`, `strength `
+                ]
+            },
+            options: {
+                title: {
                     display: true,
-                    text: 'Exercise Percentages',
-                }
+                    text: 'Exercise Percentages'
+                },
+                    animation: {
+                        duration: 1000,
+                        easing: 'linear'
+                    }
+                
             }
         })
         content.append(canvas)
+        setTimeout(function () {
+            graph.data.datasets =[{
+                data: [cardioCount, strengthCount],
+                backgroundColor: ['#004480', '#ff0000']
+            }]
+            graph.update();
+        }, 200)
     }
-        static renderRoutines = (routines) => {
+    static renderRoutines = (routines) => {
 
-            const aside = document.querySelector("#aside")
-            aside.innerHTML=''
-            const routineList = document.createElement("ul")
-            for(const routine of routines){
-                let routineLi = document.createElement("li")
-                routineLi.classList.add('aside-box')
-                routineLi.innerHTML = `
+        const aside = document.querySelector("#aside")
+        aside.innerHTML = ''
+        const routineList = document.createElement("ul")
+        for (const routine of routines) {
+            let routineLi = document.createElement("li")
+            routineLi.classList.add('aside-box')
+            routineLi.innerHTML = `
                 <p class="asideExercise routineLi">${routine.name}</p>
                 <button class="far fa-trash-alt" id ="remove-routine">
                 </button>
                 `
-                routineLi.querySelector("#remove-routine").dataset.routineId = `${routine.id}`
-                routineLi.querySelector("p").dataset.routineId = `${routine.id}`
-                routineLi.dataset.routineId = `${routine.id}`
-                routineLi.classList.add ("routineLi")
-                routineList.append(routineLi)
-            }
-            const addRoutineButton = document.createElement('button')
-            addRoutineButton.textContent ="Add new Routine"
-            addRoutineButton.setAttribute("id", "addRoutine")
-            routineList.prepend(addRoutineButton)
-            aside.append(routineList)
-
-
+            routineLi.querySelector("#remove-routine").dataset.routineId = `${routine.id}`
+            routineLi.querySelector("p").dataset.routineId = `${routine.id}`
+            routineLi.dataset.routineId = `${routine.id}`
+            routineLi.classList.add("routineLi")
+            routineList.append(routineLi)
         }
+        const addRoutineButton = document.createElement('button')
+        addRoutineButton.textContent = "Add new Routine"
+        addRoutineButton.setAttribute("id", "addRoutine")
+        routineList.prepend(addRoutineButton)
+        aside.append(routineList)
 
-        static getRoutines = (currentUser) => {
-            const baseURL = "http://localhost:3000/api/v1/users/"
-            fetch(baseURL + currentUser.id)
-                .then(response => (response.json()))
-                .then(user => {
-                    User.renderRoutines(user.data.attributes.routines)
-                })
-        }
 
-    
+    }
+
+    static getRoutines = (currentUser) => {
+        const baseURL = "http://localhost:3000/api/v1/users/"
+        fetch(baseURL + currentUser.id)
+            .then(response => (response.json()))
+            .then(user => {
+                User.renderRoutines(user.data.attributes.routines)
+            })
+    }
+
+
 
 
 }
