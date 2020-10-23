@@ -17,7 +17,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
         let header = document.querySelector('header');
         header.addEventListener('click', e => {
             if (e.target.matches('h1')) {
-                console.log('render home page')
+                let userName = document.querySelector('main').dataset.userName
+                User.UserLogin(userName)
             } else if (e.target.matches('.userIcon')) {
                 userPage()
             } else if (e.target.matches('.logoutBtn')) {
@@ -150,10 +151,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         weight: target.weight.value
                     })
                 }
-
                 fetch(baseURL + userId, options)
                     .then(response => response.json())
-                    .then(console.log)
+                    .then(user => {
+                        User.UserLogin(user.name)
+                    })
             }
         })
     }
@@ -389,7 +391,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         // date.toLocaleDateString()
         return date 
     }
-    
+
     userPageListener();
     exerciseClickListener();
     contentDivListener();

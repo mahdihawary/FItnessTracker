@@ -16,25 +16,38 @@ header {
 }
 h1 {
   color: #f0f0f0;
-  padding: 1vh 1vw;
-  width: 60vw;
-  margin-left: 5vw;
+  width: 55vw;
   align-self: center;
 }
-#userNav {
-  width: 30vw;
-  display: flex;
-  margin-right: 5vw;
-}
-.userIcon {
-  color: #f0f0f0;
-  width: 20vw;
-  align-self: center;
+h1:hover {
+  cursor: pointer;
+  /* color: #f0d0d0; */
 }
 
-.logoutBtn {
+#userNav {
+  width: 45vw;
+  display: flex;
+  /* margin-right: 5vw; */
+}
+#userNav > * {
+  transition: .5s;
+  font-size: 1em;
   width: 15vw;
+}
+
+.userIcon {
+  color: #f0f0f0;
+  align-self: center;
+  text-align: center;
+  padding: 2.35vh 0;
+}
+.logoutBtn {
   justify-self: right;
+}
+.statsButton {
+  color: #f0f0f0;
+  align-self: center;
+  padding: 2.35vh 0;
 }
 
 h1, aside, .content {
@@ -53,7 +66,7 @@ main {
   width: 60vw;
   margin: 10vh 10vw;
   border: 1px solid #ff0000;
-  padding: 10vh 10vw;
+  padding: 7.5vh 7.5vw;
 }
 
 aside {
@@ -83,21 +96,28 @@ aside {
   font-size: .9em;
   color: #830202;
 }
-.aside-box:hover{
+.aside-box:hover .asideExercise, .aside-box:hover{
   cursor: pointer;
-background-color: #606060;
-
+  background-color: #606060;
 }
 .aside-box{
   border: 1px solid #303060;
-  padding: 1vh 1vw;
+  display: flex;
   margin: 2vh;
   -webkit-box-shadow: .5px .5px 5px 6px #ccc;
   -moz-box-shadow: .5px .5px 5px 6px #ccc;
   box-shadow: 0.5px 0.5px 3px 1px #888;
   border-radius: 2px;
 }
-
+.asideExercise {
+  width: 80%;
+  height: 100%;
+  justify-self: center;
+  align-self: center;
+}
+#remove-routine {
+  width: 20%;
+}
 .content {
   border: 1px solid red;
   width: 55vw;
@@ -110,9 +130,9 @@ button {
   transition: .5s;
   border: none;
   border-radius: 1px;
+  font-size: 1em;
 }
-button:hover {
-
+button:hover, .userIcon:hover {
 cursor: pointer;
  background-color: #d804049a;
 }
@@ -120,6 +140,7 @@ input{
   border: none;
   background-color: #606060;
   text-align: center;
+  font-size: 1em;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -134,4 +155,12 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #606060 inset;
   transition: background-color 5000s ease-in-out 0s;
   text-align: center;
+}
+
+.centerText {
+  text-align: center;
+}
+
+h2 {
+  margin: 1vh 0;
 }
