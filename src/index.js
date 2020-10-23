@@ -17,11 +17,12 @@ document.addEventListener("DOMContentLoaded", function (e) {
             if (e.target.matches('h1')) {
                 console.log('render home page')
             } else if (e.target.matches('.userIcon')) {
-                console.log('render user page')
+                userPage()
             } else if (e.target.matches('.logoutBtn')) {
                 logout()
             } else if (e.target.matches('.statsButton')) {
                 getUserStats()
+                // Render.removeUserView()
                 Render.removeContentDivContent()
                 Render.removeAsideDivContent()
             }
@@ -50,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 // getCardioWeek() 
 
             } else if (target.matches('#newDay')) {
+
                 const exercise = target.parentElement
                 if (exercise.dataset.kind =="cardio"){
                 options = {
@@ -130,6 +132,26 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     })
 
 
+            } else if(e.target.matches("#editUser")){
+                let userId = document.querySelector('main').dataset.userId
+
+                e.preventDefault();
+                console.log("edit user submit")
+                options = {
+                    method: "PATCH",
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        name: target.name.value,
+                        weight: target.weight.value
+                    })
+                }
+
+                fetch(baseURL + userId, options)
+                    .then(response => response.json())
+                    .then(console.log)
             }
         })
     }
@@ -157,7 +179,42 @@ document.addEventListener("DOMContentLoaded", function (e) {
         })
     }
 
+    const userPageListener = () => {
+        document.addEventListener("click", e => {
+            let userId = document.querySelector('main').dataset.userId
+            if(e.target.matches("#editUser")){
+                let user = {
+                    name: e.target.dataset.name,
+                    weight: e.target.dataset.weight,
+                    id: userId
+                }
+                Render.editUserForm(user)
+            }
+            // else if(e.target.matches("#editUserSubmit")){
+            //     e.preventDefault();
+            //     console.log("edit user submit")
+            //     options = {
+            //         method: "PATCH",
+            //         headers: {
+            //             "content-type": "application/json",
+            //             "accept": "application/json"
+            //         },
+            //         body: JSON.stringify({
+            //             name: target.name.value,
+            //             weight: target.weight.value
+            //         })
+            //     }
 
+            //     fetch(baseURL + userId, options)
+            //         .then(response => response.json())
+            //         .then(user => {
+            //             target.reset()
+            //             Render.removeFormDiv()
+            //             // Render.renderLogin()
+            //         })
+            // }
+        })
+    }
     // fetch(exerciseBaseUrl)
     // .then(response => response.json())
     // .then( data => {
@@ -175,7 +232,16 @@ document.addEventListener("DOMContentLoaded", function (e) {
         Render.renderLogin()
     }
 
+    const userPage = () => {
+        Render.removeUserView()
+        const userId = document.querySelector("main").dataset.userId
+        fetch(baseURL + userId)
+        .then(response => (response.json()))
+        .then(Render.renderUserPage)
+    }
+
     const getUserStats = () => {
+        Render.renderAsideAndContentDiv()
         const userId = document.querySelector("main").dataset.userId
         fetch(baseURL + userId)
             .then(response => (response.json()))
@@ -267,7 +333,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         const main = document.querySelector("main")
         const date = getDate()
         const form = document.createElement('form')
-         form.id = "newDay"
+        form.id = "newDay"
         form.innerHTML = `
         <label> weight </label> 
         <input name = "weight">
@@ -320,8 +386,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
         return date
         // date.toLocaleDateString()
         return date 
-    }
 
+    userPageListener();
     exerciseClickListener();
     contentDivListener();
     navClickListener();
