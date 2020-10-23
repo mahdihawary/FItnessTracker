@@ -6,6 +6,7 @@
   background: #303030;
   font-family: 'ui-monospace';
   list-style: none;
+  outline: none;
 }
 
 header {
@@ -88,25 +89,27 @@ aside {
 .aside-tab {
   width: 50%;
   font-size: .8em;
-  color: #808080;
+  color: #909090;
   margin-top: 1.5%;
 }
 
 .selected-tab {
   font-size: .9em;
-  color: #830202;
+  color: #ff0000;
 }
 .aside-box:hover .asideExercise, .aside-box:hover{
   cursor: pointer;
   background-color: #606060;
 }
 .aside-box{
-  border: 1px solid #303060;
+  border: 1px solid #303030;
+  border: 1px solid #909090;
   display: flex;
   margin: 2vh;
-  -webkit-box-shadow: .5px .5px 5px 6px #ccc;
+  padding: 5px;
+  /* -webkit-box-shadow: .5px .5px 5px 6px #ccc;
   -moz-box-shadow: .5px .5px 5px 6px #ccc;
-  box-shadow: 0.5px 0.5px 3px 1px #888;
+  box-shadow: 0.5px 0.5px 3px 1px #888; */
   border-radius: 2px;
 }
 .asideExercise {
@@ -117,6 +120,7 @@ aside {
 }
 #remove-routine {
   width: 20%;
+  padding: 5px;
 }
 .content {
   border: 1px solid red;
@@ -132,7 +136,7 @@ button {
   border-radius: 1px;
   font-size: 1em;
 }
-button:hover, .userIcon:hover {
+button:hover, .userIcon:hover, .fa-trash-alt:hover {
 cursor: pointer;
  background-color: #d804049a;
 }
