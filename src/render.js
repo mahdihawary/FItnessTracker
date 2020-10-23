@@ -79,11 +79,10 @@ class Render {
     }
 
     static renderUserNav() {
-        let userIcon = document.createElement("p");
+        let userIcon = document.createElement("i");
+        userIcon.classList.add('far');
+        userIcon.classList.add('fa-user');
         userIcon.classList.add('userIcon');
-        setTimeout(function(){
-            userIcon.textContent = document.querySelector('main').dataset.userName
-        }, 100)
         let logoutBtn = document.createElement("button");
         logoutBtn.classList.add('logoutBtn');
         logoutBtn.textContent = `Logout`
