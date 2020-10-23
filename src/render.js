@@ -34,6 +34,18 @@ class Render {
         formDiv.innerHTML = ``;
     }
 
+    static renderUserPage(user){
+        Render.createFormDiv()
+        const formDiv = document.querySelector('.centered-form-div')
+        // console.log(user.data.attributes.name)
+        formDiv.innerHTML = `
+        <h2>${user.data.attributes.name}</h2>
+        <p>${user.data.attributes.weight} lbs</p>
+        <button id="editUser" data-name="${user.data.attributes.name}" data-weight="${user.data.attributes.weight}"type="click">Edit Details</button>
+        `
+        document.querySelector("main").append(formDiv)
+    }
+
     static createNewUserForm(node) {
         const form = document.createElement("form")
         form.setAttribute("id", "newUser")
@@ -46,6 +58,23 @@ class Render {
         <button type="submit">submit</button>
         `
         node.append(form)
+    }
+
+    static editUserForm(user) {
+        // console.log(user)
+        const formDiv = document.querySelector('.centered-form-div')
+        formDiv.innerHTML = ``;
+        const form = document.createElement("form")
+        form.setAttribute("id", "editUser")
+        form.innerHTML = `
+        <h2>Edit User</h2>
+        <label>Name</label>
+        <input name = "name" value=${user.name}>
+        <label>Weight</label> 
+        <input name ="weight" value=${user.weight}>
+        <button id="editUserSubmit" type="submit">submit</button>
+        `
+        formDiv.append(form)
     }
 
     static renderUserNav() {
