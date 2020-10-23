@@ -6,6 +6,8 @@
   background: #303030;
   font-family: 'ui-monospace';
   list-style: none;
+  outline: none;
+  box-sizing: border-box;
 }
 
 header {
@@ -64,7 +66,7 @@ main {
 
 .centered-form-div {
   width: 60vw;
-  margin: 10vh 10vw;
+  margin: 15vw 15vw;
   border: 1px solid #ff0000;
   padding: 7.5vh 7.5vw;
 }
@@ -88,27 +90,60 @@ aside {
 .aside-tab {
   width: 50%;
   font-size: .8em;
-  color: #808080;
+  color: #909090;
   margin-top: 1.5%;
 }
 
 .selected-tab {
   font-size: .9em;
-  color: #830202;
+  color: #ff0000;
 }
 .aside-box:hover .asideExercise, .aside-box:hover{
   cursor: pointer;
   background-color: #606060;
 }
 .aside-box{
-  border: 1px solid #303060;
+  border: 1px solid #303030;
+  border: 1px solid #909090;
   display: flex;
   margin: 2vh;
-  -webkit-box-shadow: .5px .5px 5px 6px #ccc;
+  padding: 5px;
+  /* -webkit-box-shadow: .5px .5px 5px 6px #ccc;
   -moz-box-shadow: .5px .5px 5px 6px #ccc;
-  box-shadow: 0.5px 0.5px 3px 1px #888;
+  box-shadow: 0.5px 0.5px 3px 1px #888; */
   border-radius: 2px;
 }
+.exercise-box {
+  border: 1px solid #909090;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  margin: 2vh 2vw;
+  padding: 5px;
+}
+.content-exercise {
+  justify-self: center;
+  align-self: center;
+}
+#newDay {
+  display: grid;
+  grid-column: 1 / span 2;
+  row-gap: 2.5vh;
+  margin: 2.5vh;
+}
+
+#newDay label {
+  justify-self: right;
+  align-self: center;
+}
+
+#newDay input {
+  width: 50%;
+  justify-self: center;
+}
+#newDay button {
+  margin: 1.25vh 0 0;
+}
+
 .asideExercise {
   width: 80%;
   height: 100%;
@@ -117,10 +152,11 @@ aside {
 }
 #remove-routine {
   width: 20%;
+  padding: 5px;
 }
 .content {
   border: 1px solid red;
-  width: 55vw;
+  width: 60vw;
   padding: 2.5vh 2.5vw;
   border-radius: 2px;
 }
@@ -132,15 +168,32 @@ button {
   border-radius: 1px;
   font-size: 1em;
 }
-button:hover, .userIcon:hover {
+
+#addRoutine, .addEx, #login button {
+  border: 1px solid #606060;
+
+}
+
+.centered-form-div h2, .centered-form-div p {
+  text-align: center;
+}
+
+button:hover, .userIcon:hover, .fa-trash-alt:hover {
 cursor: pointer;
  background-color: #d804049a;
 }
+
+.addEx {
+  margin: 2vh 2vw;
+  width: calc(100% - 4vw);
+}
+
 input{
   border: none;
   background-color: #606060;
   text-align: center;
-  font-size: 1em;
+  font-size: 1.25em;
+  padding: 5px 0;
 }
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -163,4 +216,20 @@ select:-webkit-autofill:focus {
 
 h2 {
   margin: 1vh 0;
+}
+
+#login label , #editUser label, #newUser label {
+  margin-top: 2.5vh;
+  display: block;
+  text-align: center;
+}
+
+#login input, #login button, #editUser input, #editUser button, #newUser input, #newUser button {
+  display: block;
+  text-align: center;
+  width: 50%;
+  margin: 2.5vw 25%;
+}
+#editUser {
+  width: 100%;
 }

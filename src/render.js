@@ -359,9 +359,9 @@ class Render {
         let exerciseList = document.querySelector("ul[data-routine-id]")
 
         const exerciseLi = document.createElement("li")
-        exerciseLi.classList.add('aside-box')
+        exerciseLi.classList.add('exercise-box')
         exerciseLi.innerHTML = `
-            <p class="asideExercise">${exercise.name}</p>
+            <p class="content-exercise">${exercise.name}</p>
             <button id ="exLog">Log exercise</button>
         `
         exerciseLi.dataset.exerciseId = exercise.id

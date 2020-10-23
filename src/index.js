@@ -250,7 +250,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 options = {
                     method: "DELETE",
                 }
-                console.log(target.parentElement)
+                console.log(target.parentElement.dataset.routineId)
                 fetch(routineURL + target.parentElement.dataset.routineId, options)
                 .then(response =>response.json())
                 .then(user => User.getRoutines(user))

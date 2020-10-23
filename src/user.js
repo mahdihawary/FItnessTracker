@@ -103,7 +103,10 @@ class User {
                 routineLi.classList.add('aside-box')
                 routineLi.innerHTML = `
                 <p class="asideExercise routineLi">${routine.name}</p>
-                <i id ="remove-routine" class="far fa-trash-alt"></i>`
+                <button class="far fa-trash-alt" id ="remove-routine">
+                </button>
+                `
+                routineLi.querySelector("#remove-routine").dataset.routineId = `${routine.id}`
                 routineLi.querySelector("p").dataset.routineId = `${routine.id}`
                 routineLi.dataset.routineId = `${routine.id}`
                 routineLi.classList.add ("routineLi")
