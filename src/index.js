@@ -388,7 +388,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
         return date
         // date.toLocaleDateString()
         return date 
-
+    }
+    
     userPageListener();
     exerciseClickListener();
     contentDivListener();
