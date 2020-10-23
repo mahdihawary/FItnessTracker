@@ -51,9 +51,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 // getCardioWeek() 
 
             } else if (target.matches('#newDay')) {
-                console.log('newDay submit')
+
                 const exercise = target.parentElement
-                console.log(exercise)
                 if (exercise.dataset.kind =="cardio"){
                 options = {
                     method: "POST",
@@ -88,11 +87,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 }
                 fetch(dayBaseUrl, options)
                     .then(response => response.json())
-                    .then(console.log)
+                    .then()
                 target.remove()
 
             } else if (target.matches('#newUser')) {
-                // console.log('newUser submit')
 
                 options = {
                     method: "POST",
@@ -248,7 +246,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(baseURL + userId)
             .then(response => (response.json()))
             .then(user => {
-                // console.log(user.data.attributes.exercises)
                 // render exercise stats to #content 
                 Render.renderExerciseGraphData(user.data.attributes.days_month)
                 Render.renderExercisesToAside(user.data.attributes.exercises)
@@ -307,12 +304,10 @@ document.addEventListener("DOMContentLoaded", function (e) {
                     <button type = "submit"> Add exercise to routine </button> 
                     <form>`
         content.append(routineEditForm)
-        // console.log(data)
         let exerciseOption = ``
         const exerciseSelect = document.querySelector("#exercise")
         for (const exercise of data) {
             exerciseOption = exerciseOption + `<option value = "${exercise.id}"> ${exercise.name} </option>`
-            // console.log(exerciseSelect)
         }
         exerciseSelect.innerHTML = exerciseOption
     }
@@ -370,7 +365,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
         fetch(routineURL, options)
             .then(response => (response.json()))
             .then(routine => {
-                console.log(routine)
             })
     }
 
@@ -391,9 +385,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         date = yyyy + '/' + mm + '/' + dd;
         return date
         // date.toLocaleDateString()
-        console.log(date)
         return date 
-    }
 
     userPageListener();
     exerciseClickListener();
