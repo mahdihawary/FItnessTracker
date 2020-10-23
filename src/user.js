@@ -46,6 +46,7 @@ class User {
             .then(users => {
                 const main = document.querySelector("main")
                 const currentUser = users.find(user => user.name == userName)
+                main.dataset.userName = currentUser.name
                 main.dataset.userId = currentUser.id
                 User.renderUserView(currentUser)
                 User.getCardioWeek(currentUser)
@@ -97,7 +98,8 @@ class User {
             for(const routine of routines){
                 let routineLi = document.createElement("li")
                 routineLi.classList.add('aside-box')
-                routineLi.innerHTML = `${routine.name}
+                routineLi.innerHTML = `
+                <p class="asideExercise">${routine.name}</p>
                 <button id ="remove-routine">X</button>`
                 routineLi.dataset.routineId = `${routine.id}`
                 routineLi.classList.add ("routineLi")

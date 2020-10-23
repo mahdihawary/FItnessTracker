@@ -21,6 +21,7 @@ class Render {
         const formDiv = document.querySelector('.centered-form-div')
         formDiv.innerHTML = `
             <form id="login">
+                <h2 class="centerText">Login</h2>
                 <label>UserName</label> 
                 <input name = "name">
                 <button type = "submit"> login </button>
@@ -80,14 +81,16 @@ class Render {
     static renderUserNav() {
         let userIcon = document.createElement("p");
         userIcon.classList.add('userIcon');
-        userIcon.textContent = `User-Name Here`
+        setTimeout(function(){
+            userIcon.textContent = document.querySelector('main').dataset.userName
+        }, 100)
         let logoutBtn = document.createElement("button");
         logoutBtn.classList.add('logoutBtn');
         logoutBtn.textContent = `Logout`
         let statsButton = document.createElement("button");
         statsButton.classList.add('statsButton');
         statsButton.textContent = `Stats`
-        document.querySelector('#userNav').append(userIcon, logoutBtn, statsButton)
+        document.querySelector('#userNav').append(statsButton, userIcon, logoutBtn )
     }
 
     static clearUserNav() {
@@ -317,8 +320,10 @@ class Render {
 
         const exerciseLi = document.createElement("li")
         exerciseLi.classList.add('aside-box')
-        exerciseLi.innerHTML = `${exercise.name}
-            <button id ="exLog">Log exercise</button>`
+        exerciseLi.innerHTML = `
+            <p class="asideExercise">${exercise.name}</p>
+            <button id ="exLog">Log exercise</button>
+        `
         exerciseLi.dataset.exerciseId = exercise.id
         exerciseLi.dataset.kind = exercise.kind
         exerciseList.append(exerciseLi)
