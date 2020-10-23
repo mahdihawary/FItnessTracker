@@ -172,6 +172,7 @@ class Render {
     static renderExerciseGraphData(days) {
         let content = document.querySelector('#content')
         content.innerHTML = ``;
+        console.log(content)
         let exerciseId = content.dataset.exerciseId
 
         // if(exerciseId){
@@ -230,6 +231,7 @@ class Render {
         canvas.classList.add("graph")
         canvas2.classList.add("graph")
         if (content.dataset.kind == "cardio") {
+                    console.log("graph function")
             let graph = new Chart(canvas, {
                 type: 'line',
                 data: {
@@ -300,19 +302,14 @@ class Render {
 
     static createRoutineForm(data) {
         const routineForm = document.createElement("form")
+        routineForm.setAttribute("id", "addRoutine")
         routineForm.innerHTML = `
-            <form id ="routine">
-            < label >Routine name< /label>  
-            <input name = "name" >
-            <select name = "exercises" id = "exercise">
-            </select>
-            < button type = "submit" > Create Routine < /button>
-            < /form>`
-        for (const exercise of data) {
-            let exerciseSelect = document.querySelector("select")
-            let exerciseOption = `<option value = "${exercise.id}" > ${exercise.name} </option>`
-            exerciseSelect.append(exerciseOption)
-        }
+            <label>Routine name</label>  
+            <input name="name">
+            <button type = "submit"> Create Routine </button>`
+        const aside = document.querySelector("#aside")
+        aside.prepend(routineForm)
+        
     }
 
     static renderRoutineItems(exercise) {

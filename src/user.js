@@ -93,20 +93,25 @@ class User {
         content.append(canvas)
     }
         static renderRoutines = (routines) => {
+
             const aside = document.querySelector("#aside")
+            aside.innerHTML=''
             const routineList = document.createElement("ul")
             for(const routine of routines){
                 let routineLi = document.createElement("li")
                 routineLi.classList.add('aside-box')
                 routineLi.innerHTML = `
-                <p class="asideExercise">${routine.name}</p>
+                <p class="asideExercise routineLi">${routine.name}</p>
                 <button id ="remove-routine">X</button>`
+                routineLi.querySelector("p").dataset.routineId = `${routine.id}`
                 routineLi.dataset.routineId = `${routine.id}`
                 routineLi.classList.add ("routineLi")
                 routineList.append(routineLi)
             }
             const addRoutineButton = document.createElement('button')
-            addRoutineButton.classList.add()
+            addRoutineButton.textContent ="Add new Routine"
+            addRoutineButton.setAttribute("id", "addRoutine")
+            routineList.prepend(addRoutineButton)
             aside.append(routineList)
 
 

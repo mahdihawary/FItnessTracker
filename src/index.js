@@ -157,6 +157,23 @@ document.addEventListener("DOMContentLoaded", function (e) {
                         User.UserLogin(user.name)
                     })
             }
+            else if (e.target.matches("#addRoutine")){
+                console.log("inside submit")
+                const main = document.querySelector("main")
+                options = {
+                    
+                    method: "POST",
+                    headers: {
+                        "content-type": "application/json",
+                        "accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        user_id: main.dataset.userId,
+                        name: target.name.value,
+                    })
+                }
+                createRoutine(options)
+            }
         })
     }
 
@@ -164,10 +181,11 @@ document.addEventListener("DOMContentLoaded", function (e) {
         document.addEventListener('click', e => {
             if (e.target.matches('div[data-exercise-id]')) {
                 const content = document.querySelector('#content')
+                console.log(content)
                 content.dataset.exerciseId = e.target.dataset.exerciseId
                 content.dataset.kind = e.target.dataset.kind
                 content.dataset.exerciseName = e.target.textContent
-
+                console.log(e.target)
                 getUserStats()
             } else if (e.target.matches('.aside-tab')) {
                 let tabs = document.querySelectorAll('.aside-tab')
@@ -194,40 +212,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 }
                 Render.editUserForm(user)
             }
-            // else if(e.target.matches("#editUserSubmit")){
-            //     e.preventDefault();
-            //     console.log("edit user submit")
-            //     options = {
-            //         method: "PATCH",
-            //         headers: {
-            //             "content-type": "application/json",
-            //             "accept": "application/json"
-            //         },
-            //         body: JSON.stringify({
-            //             name: target.name.value,
-            //             weight: target.weight.value
-            //         })
-            //     }
 
-            //     fetch(baseURL + userId, options)
-            //         .then(response => response.json())
-            //         .then(user => {
-            //             target.reset()
-            //             Render.removeFormDiv()
-            //             // Render.renderLogin()
-            //         })
-            // }
         })
     }
-    // fetch(exerciseBaseUrl)
-    // .then(response => response.json())
-    // .then( data => {
-    //     for(const exercise of data){
-    //         let newExercise = new Exercise(exercise.name)
-    //         newExercise.render(aside)
-    //     }
-    // })
-
 
     const logout = () => {
         main.dataset.userId = "nil"
@@ -245,7 +232,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
     }
 
     const getUserStats = () => {
-        Render.renderAsideAndContentDiv()
+        // Render.renderAsideAndContentDiv()
         const userId = document.querySelector("main").dataset.userId
         fetch(baseURL + userId)
             .then(response => (response.json()))
@@ -259,15 +246,27 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const asideDivListener = () => {
         document.addEventListener('click', (e) => {
             const target = e.target
-            if (target.matches("#removeRoutine")) {
-                // delete fetch to routine using parent element id
+            if (target.matches("#remove-routine")) {
+                options = {
+                    method: "DELETE",
+                }
+                console.log(target.parentElement)
+                fetch(routineURL + target.parentElement.dataset.routineId, options)
+                .then(response =>response.json())
+                .then(user => User.getRoutines(user))
             }
-            if (target.matches(".routineLi")) {
+            else if (target.matches(".routineLi")) {
                 const content = document.querySelector("#content")
                 content.innerHTML = ''
+                
 
                 getRoutine(target.dataset.routineId)
             }
+            else if (target.matches("#addRoutine")){
+                target.remove()
+                renderRoutineForm()
+            }
+            
 
         })
     }
@@ -368,7 +367,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
         fetch(routineURL, options)
             .then(response => (response.json()))
-            .then(routine => {
+            .then(user => {
+                User.getRoutines(user)
             })
     }
 
