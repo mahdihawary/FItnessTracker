@@ -114,7 +114,7 @@ class User {
             const baseURL = "http://localhost:3000/api/v1/users/"
             fetch(baseURL + currentUser.id)
                 .then(response => (response.json()))
-                .then(user => {)
+                .then(user => {
                     User.renderRoutines(user.data.attributes.routines)
                 })
         }
