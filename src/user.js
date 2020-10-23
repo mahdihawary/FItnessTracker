@@ -75,7 +75,8 @@ class User {
             type: 'doughnut',
                 data: {
                         datasets: [{
-                            data: [cardioCount, strengthCount]
+                            data: [cardioCount, strengthCount],
+                            backgroundColor: ['#092fd6', '#ff0000']
                         }],
                     
                     labels: [
@@ -86,7 +87,7 @@ class User {
                 options: {
                     title: {
                     display: true,
-                    text: 'Graph'
+                    text: 'Exercise Percentages',
                 }
             }
         })

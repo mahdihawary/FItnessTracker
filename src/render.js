@@ -241,6 +241,28 @@ class Render {
                         borderColor: 'rgb(255, 99, 132)',
                         data: distance
                     }]
+                }, options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: true,
+                                color: 'rgb(255, 0, 0)'
+                            },
+
+                        }],
+                        yAxes: [{
+                            display: true,
+                            gridLines: {
+                                color: 'rgb(255, 0, 0)'
+                            }
+                        }]
+                    }
                 }
             })
             content.append(canvas)
@@ -290,6 +312,28 @@ class Render {
                             borderColor: 'rgb(255, 99, 132)',
                             data: weight
                         }]
+                    }, options: {
+                        legend: {
+                            labels: {
+                                fontColor: 'white'
+                            }
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                gridLines: {
+                                    display: true,
+                                    color: 'rgb(255, 0, 0)'
+                                },
+
+                            }],
+                            yAxes: [{
+                                display: true,
+                                gridLines: {
+                                    color: 'rgb(255, 0, 0)'
+                                }
+                            }]
+                        }
                     }
                 })
                 content.append(canvas)
