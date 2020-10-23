@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
     const exerciseBaseUrl = "http://localhost:3000/api/v1/exercises/"
     const dayBaseUrl = "http://localhost:3000/api/v1/days/"
     const routineURL = "http://localhost:3000/api/v1/routines/"
-
+    Chart.defaults.global.defaultFontColor = 'white';
+    Chart.defaults.global.defaultFontSize = 14;
+    Chart.defaults.global.defaultFontFamily = 'ui-monospace';
 
     const main = document.querySelector("main")
     const content = document.querySelector("#content")

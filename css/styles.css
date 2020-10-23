@@ -1,12 +1,15 @@
 * {
   padding: 0;
   margin: 0;
-  color: #303030;
-  font-family: 'Courier New', Courier, monospace;
+  color: #ffffff;
+  /* font-family: 'Courier New', Courier, monospace; */
+  background: #303030;
+  font-family: 'ui-monospace';
+  list-style: none;
 }
 
 header {
-  border: 1px solid black;
+  border-bottom: 1px solid black;
   height: 7.5vh;
   background: #303030;
   display: flex;
@@ -36,25 +39,28 @@ h1 {
 
 h1, aside, .content {
   text-align: center;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 main {
-  margin: 5vh 10vw;
+  margin: 5vh 5vw;
   display: flex;
-  column-gap: 10vw;
+  column-gap: 5vw;
+  
 }
 
 .centered-form-div {
   width: 60vw;
   margin: 10vh 10vw;
-  border: 1px solid #008844;
+  border: 1px solid #ff0000;
   padding: 10vh 10vw;
 }
 
 aside {
-  border: 1px solid #ff6000;
+  border: 1px solid #ff0000;
   width: 25vw;
-  padding: 2.5vh 2.5vw
+  padding: 2.5vh 2.5vw;
+  border-radius: 2px;
 }
 
 .aside-header {
@@ -75,21 +81,57 @@ aside {
 
 .selected-tab {
   font-size: .9em;
-  color: #303030;
+  color: #830202;
 }
+.aside-box:hover{
+  cursor: pointer;
+background-color: #606060;
 
+}
 .aside-box{
   border: 1px solid #303060;
   padding: 1vh 1vw;
   margin: 2vh;
+  -webkit-box-shadow: .5px .5px 5px 6px #ccc;
+  -moz-box-shadow: .5px .5px 5px 6px #ccc;
+  box-shadow: 0.5px 0.5px 3px 1px #888;
+  border-radius: 2px;
 }
 
 .content {
   border: 1px solid red;
-  width: 50vw;
-  padding: 2.5vh 2.5vw
+  width: 55vw;
+  padding: 2.5vh 2.5vw;
+  border-radius: 2px;
 }
 
 button {
   padding: 1vh 1vw;
+  transition: .5s;
+  border: none;
+  border-radius: 1px;
+}
+button:hover {
+
+cursor: pointer;
+ background-color: #d804049a;
+}
+input{
+  border: none;
+  background-color: #606060;
+  text-align: center;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-text-fill-color: white;
+  -webkit-box-shadow: 0 0 0px 1000px #606060 inset;
+  transition: background-color 5000s ease-in-out 0s;
+  text-align: center;
 }

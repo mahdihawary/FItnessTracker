@@ -232,7 +232,7 @@ class Render {
                 data: {
                     labels: date,
                     datasets: [{
-                        label: `${content.dataset.exerciseName}`,
+                        label: `${content.dataset.exerciseName} Distance`,
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
                         data: distance
@@ -240,18 +240,38 @@ class Render {
                 }
             })
             content.append(canvas)
-
             let graph2 = new Chart(canvas2, {
                 type: 'line',
                 data: {
                     labels: date,
                     datasets: [{
-                        label: `${content.dataset.exerciseName}`,
+                        label: `${content.dataset.exerciseName} Speed in mph`,
                         backgroundColor: 'rgb(255, 99, 132)',
                         borderColor: 'rgb(255, 99, 132)',
-                        data: speed
+                        data: speed,
                     }]
-                }
+                },
+                options: {
+                    legend: {
+                        labels: {
+                            fontColor: 'white'
+                        }
+                    }
+                , scales: {
+                        xAxes: [{
+                            display: true,
+                            gridLines: {
+                                display: true,
+                                    color: 'rgb(255, 0, 0)'
+                            },
+
+                        }],
+                        yAxes: [{
+                            display: true,
+                            gridLines: {
+                            color: 'rgb(255, 0, 0)'
+                            }
+                        }]}}
             })
             content.append(canvas2)
         } else if (content.dataset.kind == "strength") {
@@ -261,7 +281,7 @@ class Render {
                     data: {
                         labels: date,
                         datasets: [{
-                            label: `${content.dataset.exerciseName}`,
+                            label: `${content.dataset.exerciseName} weight`,
                             backgroundColor: 'rgb(255, 99, 132)',
                             borderColor: 'rgb(255, 99, 132)',
                             data: weight
